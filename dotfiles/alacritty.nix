@@ -6,19 +6,19 @@
     settings = {
       font = {
         normal = {
-          family = "Source Code Pro for Powerline";
+          family = "Iosevka";
           style = "Regular";
         };
         bold = {
-          family = "Source Code Pro for Powerline";
+          family = "Iosevka";
           style = "Bold";
         };
         italic = {
-          family = "Source Code Pro for Powerline";
+          family = "Iosevka";
           style = "Italic";
         };
         bold-italic = {
-          family = "Source Code Pro for Powerline";
+          family = "Iosevka";
           style = "Bold Italic";
         };
         size = 10;
@@ -56,7 +56,7 @@
         };
       };
       background_opacity = 0.8;
-      mouse.url.launcher = "firefox";
+      mouse.url.launcher = "qutebrowser";
     };
   };
 }

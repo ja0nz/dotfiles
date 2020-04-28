@@ -5,7 +5,7 @@ with lib;
 {
   imports = [ <home-manager/nixos> ];
 
-  home-manager.users.alex = {pkgs, lib, ...}:
+  home-manager.users.jan = {pkgs, lib, ...}:
   {
     imports = [
       ./packages.nix
@@ -19,8 +19,9 @@ with lib;
       ./systemd.nix
       ./sway.nix
       ./emails.nix
-      ./lorri.nix
+#      ./lorri.nix
       ./gpg.nix
+      ./ssh.nix
     ];
 
     options = {
@@ -52,8 +53,8 @@ with lib;
 
       nixpkgs.overlays = builtins.attrValues (import ./overlays.nix);
 
-      dots = /home/alex/dotfiles;
-      scripts = /home/alex/scripts;
+      dots = /home/jan/nixconf/dotfiles;
+      scripts = /home/jan/nixconf/scripts;
       modifier = "Mod4";
       machine = config.machine;
     };

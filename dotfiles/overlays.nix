@@ -1,36 +1,36 @@
 {
   emacsOverlay = import <emacs>;
 
-  nixmacsOverlay = self: super: {
-    nixmacs = (self.pkgs.callPackage (/home/alex/nixmacs) {
-      configurationFile = /home/alex/dotfiles/nixmacsConf.nix;
-    });
-  };
+#  nixmacsOverlay = self: super: {
+#    nixmacs = (self.pkgs.callPackage (/home/alex/nixmacs) {
+#      configurationFile = /home/alex/dotfiles/nixmacsConf.nix;
+#    });
+#  };
 
   myWaylandOverlay = self: super: builtins.removeAttrs (import <nixpkgs-wayland> self super) [ "sway-unwrapped" "wlroots" ];
 
-  cattOverlay = self: super: {
-    catt = (self.pkgs.callPackage ./pkgs/catt { });
-  };
+#  cattOverlay = self: super: {
+#    catt = (self.pkgs.callPackage ./pkgs/catt { });
+#  };
 
-  # pipewireNoBT = self: super: {
-  #   pipewire = super.pipewire.overrideAttrs (attrs: {
-  #     mesonFlags = attrs.mesonFlags ++ [
-  #       "-Dbluez5=false"
-  #       "-Dbluez-backend-native=false"
-  #       "-Dbluez-backend-ofono=false"
-  #     ];
-  #   });
-  # };
+#  pipewireNoBT = self: super: {
+#    pipewire = super.pipewire.overrideAttrs (attrs: {
+#      mesonFlags = attrs.mesonFlags ++ [
+#        "-Dbluez5=false"
+#        "-Dbluez-backend-native=false"
+#        "-Dbluez-backend-ofono=false"
+#      ];
+#    });
+#  };
 
-  zoomOverlay = self: super: {
-    my-zoom = self.zoom-us.overrideAttrs (attrs: {
-      pname = "my-zoom";
-      qtWrapperArgs = attrs.qtWrapperArgs ++ [
-        ''--prefix GDK_BACKEND : "x11"''
-      ];
-    });
-  };
+#  zoomOverlay = self: super: {
+#    my-zoom = self.zoom-us.overrideAttrs (attrs: {
+#      pname = "my-zoom";
+#      qtWrapperArgs = attrs.qtWrapperArgs ++ [
+#        ''--prefix GDK_BACKEND : "x11"''
+#      ];
+#    });
+#  };
 
   gammastepOverlay = self: super: {
     gammastep = super.gammastep.overrideAttrs (attr: {

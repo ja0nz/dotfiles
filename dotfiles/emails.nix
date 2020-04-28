@@ -1,38 +1,47 @@
 { config, ... }:
-
+let
+  inherit (config) dots;
+in
 {
   accounts.email.accounts = {
-    hotmail = rec {
+    "jan@peteler.email" = rec {
       primary = true;
-      address = "alexrice999@hotmail.co.uk";
+      address = "jan@peteler.email";
       userName = address;
-      realName = "Alex Rice";
-      passwordCommand = "${config.scripts}/bw-get.fish login.live.com";
-      mbsync.enable = true;
-      imap = {
-        host = "imap-mail.outlook.com";
-        tls.enable = true;
-      };
-      notmuch.enable = true;
-    };
-
-    university = rec {
-      address = "AXR1014@bham.ac.uk";
-      userName = "AXR1014";
-      realName = "Alex Rice";
-      passwordCommand = "${config.scripts}/bw-get.fish my.bham";
+      realName = "Jan Peteler";
+      passwordCommand = "gpg2 -q --for-your-eyes-only --no-tty -d ${dots}/protected/mbsyncpass.gpg";
       mbsync = {
         enable = true;
+        create = "maildir";
+        expunge = "both";
         extraConfig.account.AuthMechs = "Plain";
       };
       imap = {
-        host = "mail.bham.ac.uk";
+        host = "imap.purelymail.com";
         tls.enable = true;
       };
-      notmuch.enable = true;
+#      notmuch.enable = true;
+    };
+
+    "mail@ja.nz" = rec {
+      address = "mail@ja.nz";
+      userName = address;
+      realName = "Ja0nz";
+      passwordCommand = "gpg2 -q --for-your-eyes-only --no-tty -d ${dots}/protected/mbsyncpass.gpg";
+      mbsync = {
+        enable = true;
+        create = "maildir";
+        expunge = "both";
+        extraConfig.account.AuthMechs = "Plain";
+      };
+      imap = {
+        host = "imap.purelymail.com";
+        tls.enable = true;
+      };
+#      notmuch.enable = true;
     };
   };
 
   programs.mbsync.enable = true;
-  programs.notmuch.enable = true;
+#  programs.notmuch.enable = true;
 }

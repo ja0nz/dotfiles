@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export BUP_DIR=/run/media/alex/EXT_HDR/backups
+export BUP_DIR=/run/media/jan/EXT_HDR/backups
 
 if [ ! -d $BUP_DIR ]; then
     echo Cannot find backup drive

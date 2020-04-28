@@ -3,7 +3,7 @@
 with lib;
 
 let
-  inherit (import /home/alex/dotfiles/overlays.nix) myWaylandOverlay;
+  inherit (import /home/jan/nixconf/dotfiles/overlays.nix) waylandOverlay;
 in
 {
   options = {
@@ -30,7 +30,7 @@ in
       allowUnfree = true;
     };
 
-    boot.supportedFilesystems = [ "ntfs" ];
+#    boot.supportedFilesystems = [ "ntfs" ];
 
     security.sudo.enable = true;
     security.sudo.extraConfig = "Defaults pwfeedback";
@@ -43,7 +43,6 @@ in
         systemctl --user import-environment
       '';
     };
-
 
     # Use the systemd-boot EFI boot loader.
     boot.loader.systemd-boot.enable = true;
@@ -58,12 +57,12 @@ in
 
     # Select internationalisation properties.
     console = {
-      font = "lat2-Terminus16";
-      keyMap = "uk";
+      font = "Lat2-Terminus16";
+      keyMap = "neo";
     };
 
     i18n = {
-      defaultLocale = "en_GB.UTF-8";
+      defaultLocale = "en_US.UTF-8";
     };
 
     hardware = {
@@ -83,7 +82,7 @@ in
     };
 
     # Set your time zone.
-    time.timeZone = "Europe/London";
+    time.timeZone = "Europe/Berlin";
 
     nix = {
       package = pkgs.nixUnstable;
@@ -92,6 +91,7 @@ in
         experimental-features = nix-command flakes
       '';
       autoOptimiseStore = true;
+      trustedUsers = ["@wheel"];
     };
 
     # System packages
@@ -99,7 +99,7 @@ in
       systemPackages = with pkgs; [
         git
         bup
-        xboxdrv
+#        xboxdrv
       ];
     };
 
@@ -113,6 +113,7 @@ in
         emacs-all-the-icons-fonts
         noto-fonts
         # nerdfonts
+        fira-code
       ];
 
       fontconfig = {
@@ -128,7 +129,7 @@ in
     };
 
     services = {
-      mingetty.autologinUser = "alex";
+      mingetty.autologinUser = "jan";
 
       geoclue2.enable = true;
 
@@ -146,24 +147,56 @@ in
     #   ];
     # };
 
-    services.gvfs.enable = true;
+#    services.gvfs.enable = true;
 
     programs.dconf.enable = true;
-    programs.adb.enable = true;
+#    programs.adb.enable = true;
 
     # Enable sound.
     sound.enable = true;
 
     programs.fish = {
       enable = true;
-      # loginShellInit = ''
-      #   if not set -q SWAYSTARTED
-      #     if not set -q DISPLAY && test (tty) = /dev/tty1
-      #       set -g SWAYSTARTED 1
-      #       exec sway
-      #     end
-      #   end
-      # '';
+       loginShellInit = ''
+         if not set -q SWAYSTARTED
+           if not set -q DISPLAY && test (tty) = /dev/tty1
+             set -g SWAYSTARTED 1
+             exec sway
+           end
+         end
+       '';
+    };
+
+    virtualisation.libvirtd = {
+      enable = true;
+      allowedBridges = [ "virbr0" ];
+    };
+
+    # Set up immutable users
+    users = {
+      mutableUsers = false;
+      users.root = {
+        shell = pkgs.fish;
+        hashedPassword = "$6$9IUNqyGsWrU$Pfhv8Smj6YURO60E8JRu96DbBhzvXMTcSV4sADJpLurOljurJf4H3DqpYTklBYeQxQxOE7n5DFmTPpqsiRczZ.";
+      };
+      users.jan = {
+        shell = pkgs.fish;
+        isNormalUser = true;
+        home = "/home/jan";
+        extraGroups = ["wheel" "networkmanager" "video" "audio" "libvirtd"];
+        uid = 1000;
+        hashedPassword = "$6$CBDCAMFsC$GnF91Mr6dee0qO6mxJwGwXIEfnixNP/d80KB38mf2mIz9c4HuoGwNY2i1UERhkdj.QwTgZy5CodMc3kMi.wCf/";
+      };
+    };
+
+    fileSystems."/home/jan" = {
+      device = "/dev/disk/by-label/HOME";
+      options = ["rw" "noatime"];
+      encrypted = {
+       enable = true;
+       blkDev = "/dev/sda5";
+       label = "home";
+      };
     };
 
     # This value determines the NixOS release with which your system is to be

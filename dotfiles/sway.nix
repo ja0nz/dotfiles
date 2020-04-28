@@ -52,25 +52,25 @@ in
       terminal = "alacritty";
       workspaceAutoBackAndForth = true;
       keybindings = lib.mkOptionDefault {
-        "${modifier}+n" = "exec caja";
-        "${modifier}+m" = "exec \"GDK_BACKEND=x11 thunderbird\"";
-        "${modifier}+b" = lib.mkForce "exec emacsclient -c";
-        "${modifier}+c" = "exec firefox";
+        "${modifier}+Ctrl+t" = "exec caja";
+#        "${modifier}+m" = "exec \"GDK_BACKEND=x11 thunderbird\"";
+        "${modifier}+Ctrl+r" = lib.mkForce "exec emacsclient -c";
+        "${modifier}+Ctrl+n" = "exec qutebrowser";
         "${modifier}+p" = "exec ${scripts + "/take_screenshot"}";
         "${modifier}+Shift+p" = "exec ${scripts + "/take_screenshot"} full";
         "${modifier}+l" = "exec \"swaylock -f -c 000000\"";
         "XF86MonBrightnessUp" = "exec \"brillo -A 1\"";
         "XF86MonBrightnessDown" = "exec \"brillo -U 1\"";
-        "XF86AudioLowerVolume" = "exec \"pactl set-sink-volume 0 -5%\"";
-        "XF86AudioRaiseVolume" = "exec \"pactl set-sink-volume 0 +5%\"";
+        "XF86AudioLowerVolume" = "exec \"pactl set-sink-volume @DEFAULT_SINK@ -5%\"";
+        "XF86AudioRaiseVolume" = "exec \"pactl set-sink-volume @DEFAULT_SINK@ +5%\"";
         "XF86AudioPlay" = "exec \"playerctl play\"";
         "XF86AudioPause" = "exec \"playerctl pause\"";
         "XF86AudioNext" = "exec \"playerctl next\"";
         "XF86AudioPrev" = "exec \"playerctl previous\"";
-        "${modifier}+x" = "exec networkmanager_dmenu";
-        "${modifier}+Ctrl+r" = "exec reboot";
-        "${modifier}+Ctrl+k" = "exec \"shutdown -h now\"";
-        "${modifier}+Ctrl+s" = "exec \"swaylock -f -c 000000 && systemctl suspend\"";
+        "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
+        "${modifier}+Ctrl+g" = "exec reboot";
+        "${modifier}+Ctrl+h" = "exec \"shutdown -h now\"";
+        "${modifier}+Ctrl+f" = "exec \"swaylock -f -c 000000 && systemctl suspend\"";
       };
       window = {
         border = 2;
@@ -81,36 +81,37 @@ in
         { command = "dropbox start"; always = true; }
       ];
       input = {
-        "2:7:SynPS/2_Synaptics_TouchPad" = {
-          natural_scroll = "enabled";
-        };
-        "1739:0:Synaptics_TM2668-002" = {
+#        "2:7:SynPS/2_Synaptics_TouchPad" = {
+#          natural_scroll = "enabled";
+#        };
+        "1739:0:Synaptics_TM3072-003" = {
           natural_scroll = "enabled";
         };
         "*" = if config.machine == "laptop" then {
-          xkb_layout = "gb,gb";
-          xkb_variant = "dvorak,";
-          xkb_options = "grp:alt_space_toggle,caps:menu";
+          xkb_layout = "de,de";
+          xkb_variant = "neo,";
+          xkb_options = "grp:alt_shift_toggle";
         } else {
-          xkb_layout = "gb";
-          xkb_options = "caps:menu";
+          xkb_layout = "de";
+          xkb_options = "caps:none";
         };
       };
       output = if config.machine == "laptop" then {
         "*" = {
           bg = "\"${dots + "/background-image.png"}\" fill";
         };
-        "HDMI-A-1" = {
-          pos = "0,0";
-          res = "1920x1080";
-        };
+#        "HDMI-A-1" = {
+#          pos = "0,0";
+#          res = "1920x1080";
+#        };
         "HDMI-A-2" = {
-          pos = "1920,0";
+          pos = "1600,0";
           res = "1920x1080";
         };
         "eDP-1" = {
-          pos = "1120,1080";
-          res = "1600x900";
+          pos = "0,0";
+          scale = "1.6";
+          res = "2560x1440";
         };
       } else {
         "*" = {

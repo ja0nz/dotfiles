@@ -3,7 +3,7 @@
 filestart="$HOME/Pictures/screenshot"
 number=0
 while test -e "$filestart$number.png"; do
-	(( ++number))
+    (( ++number))
 done
 
 fname="$filestart$number.png"

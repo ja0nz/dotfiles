@@ -1,22 +1,22 @@
 { pkgs, ... }:
 
-let
-  inherit (import /home/alex/dotfiles/overlays.nix) amdvlkOverlay;
-in
+#let
+#  inherit (import /home/alex/dotfiles/overlays.nix) amdvlkOverlay;
+#in
 {
   imports = [
     ./common.nix
-    ../../../etc/nixos/hardware-configuration.nix
-    ../../../etc/nixos/cachix.nix
+    /etc/nixos/hardware-configuration.nix
+    /etc/nixos/cachix.nix
   ];
 
   machine = "desktop";
 
-  networking.hostName = "Desktop_Nixos";
+  networking.hostName = "desktop-nixos";
 
-  services.xserver.videoDrivers = [ "amdgpu" ];
+#  services.xserver.videoDrivers = [ "amdgpu" ];
 
-  environment.variables.VK_ICD_FILENAMES = "${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json";
+#  environment.variables.VK_ICD_FILENAMES = "${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json";
 
-  services.sshd.enable = true;
+#  services.sshd.enable = true;
 }

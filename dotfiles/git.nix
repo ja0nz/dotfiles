@@ -3,11 +3,11 @@
 {
   programs.git = {
     enable = true;
-    userName = "Alex Rice";
-    userEmail = "alexrice999@hotmail.co.uk";
+    userName = "ja0nz";
+    userEmail = "mail@ja.nz";
     ignores = ["*~"];
     signing = {
-      key = "4B9FC04B9EE7F4AE99A7573493DDCD7A2B3F3B88";
+      key = "3A83233C"; # Short key: gpg --list-secret-keys --keyid-format short
       signByDefault = true;
     };
     extraConfig = {

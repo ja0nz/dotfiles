@@ -46,15 +46,15 @@
     };
     emacs = {
       Unit = {
-        Description = "Nixmacs text editor";
-        Documentation = "man:nixmacs(1)";
+        Description = "Emacs text editor";
+        Documentation = "man:emacs(1)";
       };
       Install = {
         WantedBy = [ "default.target" ];
       };
       Service = {
         Type = "forking";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'source ${setEnvironment}; exec ${pkgs.nixmacs}/bin/nixmacs --daemon'";
+        ExecStart = "${pkgs.bash}/bin/bash -c 'source ${setEnvironment}; exec ${pkgs.emacs}/bin/emacs --daemon'";
         ExecStop = "${pkgs.emacs}/bin/emacsclient --eval \"(kill-emacs)\"";
         Restart = "always";
       };
