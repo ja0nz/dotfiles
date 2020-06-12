@@ -13,15 +13,15 @@
 #    catt = (self.pkgs.callPackage ./pkgs/catt { });
 #  };
 
-#  pipewireNoBT = self: super: {
-#    pipewire = super.pipewire.overrideAttrs (attrs: {
-#      mesonFlags = attrs.mesonFlags ++ [
-#        "-Dbluez5=false"
-#        "-Dbluez-backend-native=false"
-#        "-Dbluez-backend-ofono=false"
-#      ];
-#    });
-#  };
+  pipewireNoBT = self: super: {
+    pipewire = super.pipewire.overrideAttrs (attrs: {
+      mesonFlags = attrs.mesonFlags ++ [
+        "-Dbluez5=false"
+        "-Dbluez-backend-native=false"
+        "-Dbluez-backend-ofono=false"
+      ];
+    });
+  };
 
 #  zoomOverlay = self: super: {
 #    my-zoom = self.zoom-us.overrideAttrs (attrs: {

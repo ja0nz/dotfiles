@@ -1,20 +1,19 @@
 { config, pkgs, ... }:
 
 {
-  # Set up immutable users
   users = {
     mutableUsers = false;
-      users.root = {
+    users.root = {
       shell = pkgs.fish;
-      hashedPassword = "$6$4dxSa3uVxuwa$2pkshyXLslXxhuZCMZVmrknXsrd4k5DTrJgoL4izv6U/XQJ6iM2asqX.L6chpmEiBlhJC1F1P7Pw/3RZX/VMN0";
+      hashedPassword = "$6$9IUNqyGsWrU$Pfhv8Smj6YURO60E8JRu96DbBhzvXMTcSV4sADJpLurOljurJf4H3DqpYTklBYeQxQxOE7n5DFmTPpqsiRczZ.";
     };
-    users.alex = {
+    users.jan = {
       shell = pkgs.fish;
       isNormalUser = true;
-      home = "/home/alex";
-      extraGroups = ["wheel" "networkmanager" "video" "audio" "adbusers"];
+      home = "/home/jan";
+      extraGroups = ["wheel" "networkmanager" "video" "audio" "libvirtd"];
       uid = 1000;
-      hashedPassword = "$6$lY0U5C4WoOcmj.6$YLKJMkQVUJDbItcyHV7wZuvmzpvmOcPR9dgHWJYzUHBB7bSevyC4Vqpqm2IxoVqqhpz.KY7aQJnQI2HaSDsL1.";
-    }; 
+      hashedPassword = "$6$CBDCAMFsC$GnF91Mr6dee0qO6mxJwGwXIEfnixNP/d80KB38mf2mIz9c4HuoGwNY2i1UERhkdj.QwTgZy5CodMc3kMi.wCf/";
+    };
   };
 }

@@ -107,7 +107,7 @@ in
 
     # Programs
     emacs                     # The extensible, customizable GNU text editor
-    firefox                   # A web browser built from Firefox source tree (with plugins: )
+    firefox-wayland           # A web browser built from Firefox source tree (with plugins: )
 #    chromium
 #    thunderbird
     vlc                       # Cross-platform media player and streaming server
@@ -141,14 +141,14 @@ in
     isync                     # Free IMAP and MailDir mailbox synchronizer
     pandoc                    # Conversion betrween markup formats
     rlwrap                    # Readline wrapper for console programs
-    yarn                      # Fast, reliable, and secure dependency management for javascript
     nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
+    deno                      # A secure runtime for JavaScript and TypeScript
+    devd                      # A local webserver for developers
     any-nix-shell             # fish and zsh support for nix-shell
     graphviz                  # Graph visualization tools
-    nim                       # Statically typed, imperative programming language
     httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
     virtmanager               # Desktop user interface for managing virtual machines
-    magic-wormhole            # Securely transfer data between computers
+    croc                      # Easily and securely send things from one computer to another
     calc                      # C-style arbitrary precision calculator
     nomachine-client          # NoMachine Remote Desktop Client
     git-secret                # A bash-tool to store your private data inside a git repository
@@ -156,5 +156,8 @@ in
     sqlite                    # A self-contained, serverless, zero-configuration SQL db engine
     guile                     # Embedded Scheme implementation
     gnumake                   # A tool to control the generation of non-source files from source
+    racket                    # A programmable programming language
+    gnutls                    # The GNU Transport Layer Security Library
+    jq                        # A lightweight and flexible command-line JSON processor
   ];
 }

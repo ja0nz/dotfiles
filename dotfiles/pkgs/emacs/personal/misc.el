@@ -3,6 +3,41 @@
 ;;(desktop-save-mode 1)
 (toggle-scroll-bar -1)
 
+;; Calendar settings
+(use-package calendar
+  :config
+  (setq calendar-date-style "european"
+        calendar-week-start-day 1))
+
+;; TS
+(use-package typescript-mode
+  :config (setq ts-comint-program-command "~/.yarn/bin/tsun")
+  :bind (:map typescript-mode-map
+              (("C-x C-e" . ts-send-last-sexp))))
+
+;; (use-package zig-mode
+;;   :hook (zig-mode . (lambda ()
+;;                        (lsp)
+;;                        (company-mode)
+;;                        (flycheck-mode))))
+
+;; Projectile
+(use-package projectile
+  :bind (:map projectile-mode-map
+              (("M-s-p r" . helm-projectile-rg)
+               ("M-s-p p" . helm-projectile))))
+
+;; Circe IRC
+(use-package circe
+  :config
+  (setq circe-network-options
+        `(("Freenode"
+           :tls t
+           :nick "ja0nz"
+           :sasl-username "ja0nz"
+           :sasl-password ,(shell-command-to-string "gpg2 -q --for-your-eyes-only --no-tty -d ~/.gnupg/shared/freenode.gpg")
+           :channels ("#nim" "#guile" "#guix" "#home-manager" "#sway")))))
+
 ;; Slime nav
 (use-package slime
   :ensure t
@@ -43,7 +78,8 @@
 (use-package parinfer
   :ensure t
   :bind
-  (("M-s-," . parinfer-toggle-mode))
+  (("M-s-," . parinfer-toggle-mode)
+   ("M-s-i" . parinfer-auto-fix))
   :config (setq parinfer-auto-switch-indent-mode t)
   :hook ((emacs-lisp-mode . parinfer-mode)
          (common-lisp-mode . parinfer-mode)
@@ -63,7 +99,7 @@
 ;; Purescript
 (prelude-install-search-engine "Pursuit" "https://pursuit.purescript.org/search?q=" "Search Pursuit: ")
 ;; Umbrella
-(prelude-install-search-engine "Umbrella" "https://github.com/thi-ng/umbrella/search?q=" "Search Umbrella Repo: ")
+(prelude-install-search-engine "Umbrella" "https://docs.thi.ng/umbrella/" "Search Umbrella Repo: ")
 
 ;; ensure psc-ide package
 (use-package purescript-mode
@@ -82,12 +118,13 @@
 ;; Rust
 (use-package lsp-mode
   :hook (rust-mode . lsp)
+;;  :hook (zig-mode . lsp)
   :commands lsp)
 
 (use-package rust-mode
-  :config (setq company-tooltip-align-annotations t)
-          (setq company-minimum-prefix-length 1)
-          (setq indent-tabs-mode nil)
+  :config (setq company-tooltip-align-annotations t
+                company-minimum-prefix-length 1
+                indent-tabs-mode nil)
   :hook (rust-mode . (lambda ()
                        (lsp)
                        (company-mode)

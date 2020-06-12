@@ -4,7 +4,7 @@
   imports = [
     /home/jan/nixconf/dotfiles/common.nix
     /etc/nixos/hardware-configuration.nix
-#    /etc/nixos/cachix.nix
+    /etc/nixos/cachix.nix
   ];
 
   config = {

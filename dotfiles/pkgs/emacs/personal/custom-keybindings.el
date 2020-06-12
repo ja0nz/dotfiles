@@ -39,3 +39,4 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-M-SPC") 'easy-mark)
 (global-set-key (kbd "C-x M-m") 'multi-term-dedicated-open)
+(global-set-key (kbd "C-r") 'helm-rg)

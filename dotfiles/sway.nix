@@ -90,7 +90,7 @@ in
         "*" = if config.machine == "laptop" then {
           xkb_layout = "de,de";
           xkb_variant = "neo,";
-          xkb_options = "grp:alt_shift_toggle";
+          xkb_options = "grp:rctrl_rshift_toggle";
         } else {
           xkb_layout = "de";
           xkb_options = "caps:none";
@@ -105,12 +105,12 @@ in
 #          res = "1920x1080";
 #        };
         "HDMI-A-2" = {
-          pos = "1600,0";
+          pos = "1706,0";
           res = "1920x1080";
         };
         "eDP-1" = {
           pos = "0,0";
-          scale = "1.6";
+          scale = "1.5";
           res = "2560x1440";
         };
       } else {
