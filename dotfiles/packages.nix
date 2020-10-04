@@ -107,7 +107,7 @@ in
 
     # Programs
     emacs                     # The extensible, customizable GNU text editor
-    firefox-wayland           # A web browser built from Firefox source tree (with plugins: )
+    firefox                   # A web browser built from Firefox source tree (with plugins: )
 #    chromium
 #    thunderbird
     vlc                       # Cross-platform media player and streaming server
@@ -159,5 +159,6 @@ in
     racket                    # A programmable programming language
     gnutls                    # The GNU Transport Layer Security Library
     jq                        # A lightweight and flexible command-line JSON processor
+    mailspring                # A beautiful, fast and maintained fork of Nylas Mail
   ];
 }
