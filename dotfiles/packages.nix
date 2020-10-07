@@ -107,7 +107,7 @@ in
 
     # Programs
     emacs                     # The extensible, customizable GNU text editor
-    firefox                   # A web browser built from Firefox source tree (with plugins: )
+    firefox-bin                   # A web browser built from Firefox source tree (with plugins: )
 #    chromium
 #    thunderbird
     vlc                       # Cross-platform media player and streaming server

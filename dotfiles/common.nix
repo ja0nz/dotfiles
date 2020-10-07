@@ -85,7 +85,8 @@ in
     time.timeZone = "Europe/Berlin";
 
     nix = {
-      package = pkgs.nixUnstable;
+      # temporary revert to nixStable
+      package = pkgs.nixStable;
       extraOptions = ''
         keep-outputs = true
         experimental-features = nix-command flakes
