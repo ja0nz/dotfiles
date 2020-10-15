@@ -37,7 +37,8 @@
          (org-shiftdown-final . windmove-down)
          (org-shiftleft-final . windmove-left)
          (org-shiftright-final . windmove-right))
-  :bind (:map org-mode-map ("M-s-g g" . counsel-org-goto))
+  :bind (:map org-mode-map
+              ("M-s-g g" . counsel-org-goto))
   :config
   (setq org-directory "~/Dropbox/org/"
         org-agenda-files
@@ -91,7 +92,7 @@
         org-journal-date-format "W%V_%Y-%m-%d"
         org-journal-file-format "W%V_%Y-%m-%d.org"
         ;;org-journal-file-format (concat org-journal-date-format ".org")
-        ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+        org-journal-skip-carryover-drawers (list "LOGBOOK")
         org-journal-dir "~/Dropbox/org/")
   :bind (:map org-journal-mode-map
               (("M-s-n b" . org-journal-previous-entry)

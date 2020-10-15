@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 let
-  cabal-bin = pkgs.callPackage (import ./pkgs/agda-2.6.2.nix) { };
+#  cabal-bin = pkgs.callPackage (import ./pkgs/agda-2.6.2.nix) { };
+  sizzy = import ./pkgs/sizzy;
 in
 {
   home.packages = with pkgs; [
@@ -107,8 +108,8 @@ in
 
     # Programs
     emacs                     # The extensible, customizable GNU text editor
-    firefox-bin                   # A web browser built from Firefox source tree (with plugins: )
-#    chromium
+    firefox-bin               # A web browser built from Firefox source tree (with plugins: )
+    chromium                  # An open web browser built from Firefox source tree (with plugins: )
 #    thunderbird
     vlc                       # Cross-platform media player and streaming server
 #    gimp
@@ -142,6 +143,7 @@ in
     pandoc                    # Conversion betrween markup formats
     rlwrap                    # Readline wrapper for console programs
     nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
+    yarn                      # Fast, reliable, and secure dependency management for javascript
     deno                      # A secure runtime for JavaScript and TypeScript
     devd                      # A local webserver for developers
     any-nix-shell             # fish and zsh support for nix-shell
@@ -160,5 +162,6 @@ in
     gnutls                    # The GNU Transport Layer Security Library
     jq                        # A lightweight and flexible command-line JSON processor
     mailspring                # A beautiful, fast and maintained fork of Nylas Mail
+    (callPackage sizzy {})     # The browser for Developers & Designers
   ];
 }

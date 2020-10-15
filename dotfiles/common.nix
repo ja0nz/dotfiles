@@ -3,7 +3,7 @@
 with lib;
 
 let
-  inherit (import /home/jan/nixconf/dotfiles/overlays.nix) waylandOverlay;
+  inherit (import /home/jan/nixconf/dotfiles/overlays.nix) myWaylandOverlay;
 in
 {
   options = {
@@ -89,7 +89,7 @@ in
       package = pkgs.nixStable;
       extraOptions = ''
         keep-outputs = true
-        experimental-features = nix-command flakes
+#        experimental-features = nix-command flakes
       '';
       autoOptimiseStore = true;
       trustedUsers = ["@wheel"];
