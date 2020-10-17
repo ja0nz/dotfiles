@@ -76,6 +76,13 @@
   :init (require 'org-roam-protocol)
   :custom
   (org-roam-directory "~/Dropbox/org/")
+  :config
+  (setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "%<%Y%m%d%H%M%S>-${slug}"
+           :head "#+title: ${title}\n#+STARTUP: fold\n"
+           :unnarrowed t)))
   :bind (:map org-roam-mode-map
               (("M-s-s l" . org-roam) ;; show links
                ("M-s-s g" . org-roam-graph)) ;; show in browser
