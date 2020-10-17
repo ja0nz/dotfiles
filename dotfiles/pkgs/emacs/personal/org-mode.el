@@ -92,7 +92,7 @@
         org-journal-date-format "W%V_%Y-%m-%d"
         org-journal-file-format "W%V_%Y-%m-%d.org"
         ;;org-journal-file-format (concat org-journal-date-format ".org")
-        org-journal-skip-carryover-drawers (list "LOGBOOK")
+        ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
         org-journal-dir "~/Dropbox/org/")
   :bind (:map org-journal-mode-map
               (("M-s-n b" . org-journal-previous-entry)
