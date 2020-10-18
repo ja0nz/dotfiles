@@ -5,14 +5,17 @@
 
 (use-package org-mru-clock
   :ensure t
-  :bind (("M-s-t i" . org-mru-clock-in)
-         ("M-s-t r" . org-mru-clock-select-recent-task))
-         ("M-s-t t" . org-clock-in)
+  :bind (("M-s-t r" . org-mru-clock-in)
+         ("M-s-t i" . org-clock-in)
          ("M-s-t o" . org-clock-out)
-         ("M-s-t u" . org-update-all-dblocks)
+         ("M-s-t u" . org-update-all-dblocks))
   :init
   (setq org-mru-clock-how-many 100
         org-mru-clock-completing-read #'ivy-completing-read))
+
+(use-package org-pomodoro
+  :ensure t
+  :bind (("M-s-t t" . org-pomodoro)))
 
 ;; (use-package org-gcal
 ;;   :ensure t
@@ -77,7 +80,8 @@
   :custom
   (org-roam-directory "~/Dropbox/org/")
   :config
-  (setq org-roam-capture-templates
+  (setq org-roam-rename-file-on-title-change nil
+        org-roam-capture-templates
         '(("d" "default" plain (function org-roam-capture--get-point)
            "%?"
            :file-name "%<%Y%m%d%H%M%S>-${slug}"

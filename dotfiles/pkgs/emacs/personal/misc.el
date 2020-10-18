@@ -1,13 +1,29 @@
 (require 'use-package)
 
 ;;(desktop-save-mode 1)
-(toggle-scroll-bar -1)
+(scroll-bar-mode -1)
+
+;; More sane line-number behaviour
+(use-package display-line-numbers
+  :hook (prog-mode . display-line-numbers-mode)
+  :config
+  (setq
+   display-line-numbers-grow-only 1
+   display-line-numbers-width-start 1))
 
 ;; Calendar settings
 (use-package calendar
   :config
   (setq calendar-date-style "european"
         calendar-week-start-day 1))
+
+;; Ivy
+(use-package counsel
+  :config
+  (setq
+   ivy-count-format "(%d/%d) ")
+  :bind (:map global-map
+              (("M-x" . helm-M-x))))
 
 ;; TS
 (use-package typescript-mode
