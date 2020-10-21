@@ -5,7 +5,8 @@
 
 ;; More sane line-number behaviour
 (use-package display-line-numbers
-  :hook (prog-mode . display-line-numbers-mode)
+  :hook ((prog-mode . display-line-numbers-mode)
+         (org-mode . display-line-numbers-mode))
   :config
   (setq
    display-line-numbers-grow-only 1
