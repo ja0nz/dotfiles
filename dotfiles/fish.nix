@@ -10,6 +10,8 @@ in
       groups = "id (whoami)";
       node = "env NODE_NO_READLINE=1 rlwrap node";
       bws = "${scripts}/bw-session.fish";
+      ls = "exa";
+      cat = "bat";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\w+-system|\{memory)'";
     };
     promptInit = "

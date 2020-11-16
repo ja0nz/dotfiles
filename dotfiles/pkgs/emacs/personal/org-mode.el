@@ -36,10 +36,11 @@
 (use-package org
   :init (require 'helm-org)
   :hook ((org-mode . (lambda () (org-bullets-mode) (org-indent-mode) (turn-on-visual-line-mode)))
-         (org-shiftup-final . windmove-up)
-         (org-shiftdown-final . windmove-down)
-         (org-shiftleft-final . windmove-left)
-         (org-shiftright-final . windmove-right))
+         ;; (org-shiftup-final . windmove-up)
+         ;; (org-shiftdown-final . windmove-down)
+         ;; (org-shiftleft-final . windmove-left)
+         ;; (org-shiftright-final . windmove-right)
+         )
   :bind (:map org-mode-map
               ("M-s-g g" . counsel-org-goto))
   :config

@@ -6,7 +6,8 @@
 ;; More sane line-number behaviour
 (use-package display-line-numbers
   :hook ((prog-mode . display-line-numbers-mode)
-         (org-mode . display-line-numbers-mode))
+         (org-mode . display-line-numbers-mode)
+         (artist-mode . (lambda () (display-line-numbers-mode -1))))
   :config
   (setq
    display-line-numbers-grow-only 1
@@ -32,17 +33,42 @@
   :bind (:map typescript-mode-map
               (("C-x C-e" . ts-send-last-sexp))))
 
+(use-package web-mode
+  :hook (web-mode . (lambda ()
+                      (flycheck-add-mode 'typescript-tslint 'web-mode)
+                      (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                        (prelude-ts-mode-defaults))))
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
+
+;;JS2
+(use-package js2-mode
+  :config (setq js2-basic-offset 2))
+
 ;; (use-package zig-mode
 ;;   :hook (zig-mode . (lambda ()
 ;;                        (lsp)
 ;;                        (company-mode)
 ;;                        (flycheck-mode))))
 
+;; Window numbering
+(use-package window-numbering
+  :ensure t
+  :config
+  (window-numbering-mode))
+
+
 ;; Projectile
 (use-package projectile
   :bind (:map projectile-mode-map
               (("M-s-p r" . helm-projectile-rg)
                ("M-s-p p" . helm-projectile))))
+
+;; (use-package drag-stuff
+;;   :enable t
+;;   :bind (:map global-map
+;;               (("M-<up>" . "drag-stuff-up"
+;;                 "M-<down>" . "drag-stuff-down"))))
 
 ;; Circe IRC
 (use-package circe

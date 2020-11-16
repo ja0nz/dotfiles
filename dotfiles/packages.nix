@@ -130,38 +130,48 @@ in
 
     ##### Added #####
     qutebrowser               # Keyboard-focused browser with a minimal GUI
-#    mate.caja                 # File manager for the MATE desktop
-#    pstree                    # Show the set of running processes as a tree
-    mtr                       # A network diagnostics tool
-    cryptsetup                # LUKS for dm-crypt
-    ripgrep                   # A utility that combines the usability of The Silver Searcher
-    bat                       # A cat(1) clone with syntax highlighting and Git integration
+    #mate.caja                 # File manager for the MATE desktop
     okular                    # KDE document viewer
+    signal-desktop            # Private, simple, and secure messenger
+    virtmanager               # Desktop user interface for managing virtual machines
+
+    # Net
+    mtr                       # A network diagnostics tool
+    croc                      # Easily and securely send things from one computer to another
+    httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
+    nmap                      # A free and open source utility for network discovery and security auditing
+    tcpdump                   # Network sniffer
+    wireguard                 # Tools for the WireGuard secure network tunnel
+    gnutls                    # The GNU Transport Layer Security Library
+    nomachine-client          # NoMachine Remote Desktop Client
+
+    # Local
+    #pstree                    # Show the set of running processes as a tree
+    bat                       # A cat(1) clone with syntax highlighting and Git integration
+    ripgrep                   # A utility that combines the usability of The Silver Searcher
+    cryptsetup                # LUKS for dm-crypt
+    exa                       # Replacement for 'ls' written in Rust
+    calc                      # C-style arbitrary precision calculator
     unp                       # Command line tool for unpacking archives easily
-    parted                    # Create, destroy, resize, check, and copy partitions
     isync                     # Free IMAP and MailDir mailbox synchronizer
+    parted                    # Create, destroy, resize, check, and copy partitions
     pandoc                    # Conversion betrween markup formats
     rlwrap                    # Readline wrapper for console programs
-    nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
-    yarn                      # Fast, reliable, and secure dependency management for javascript
-    deno                      # A secure runtime for JavaScript and TypeScript
-    devd                      # A local webserver for developers
     any-nix-shell             # fish and zsh support for nix-shell
     graphviz                  # Graph visualization tools
-    httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
-    virtmanager               # Desktop user interface for managing virtual machines
-    croc                      # Easily and securely send things from one computer to another
-    calc                      # C-style arbitrary precision calculator
-    nomachine-client          # NoMachine Remote Desktop Client
-    git-secret                # A bash-tool to store your private data inside a git repository
-    signal-desktop            # Private, simple, and secure messenger
+    ditaa                     # Convert ascii art diagrams into proper bitmap graphics
     sqlite                    # A self-contained, serverless, zero-configuration SQL db engine
-    guile                     # Embedded Scheme implementation
-    gnumake                   # A tool to control the generation of non-source files from source
-    racket                    # A programmable programming language
-    gnutls                    # The GNU Transport Layer Security Library
     jq                        # A lightweight and flexible command-line JSON processor
-    mailspring                # A beautiful, fast and maintained fork of Nylas Mail
-    (callPackage sizzy {})     # The browser for Developers & Designers
+    git-secret                # A bash-tool to store your private data inside a git repository
+
+    # Dev
+    (callPackage sizzy {})    # The browser for Developers & Designers
+    devd                      # A local webserver for developers
+    nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
+    yarn                      # Fast, reliable, and secure dependency management for javascript
+    guile                     # Embedded Scheme implementation
+    racket                    # A programmable programming language
+    gnumake                   # A tool to control the generation of non-source files from source
+    nixfmt                    # An opinionated formatter for Nix
   ];
 }

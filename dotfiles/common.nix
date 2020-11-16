@@ -2,35 +2,20 @@
 
 with lib;
 
-let
-  inherit (import /home/jan/nixconf/dotfiles/overlays.nix) waylandOverlay;
-in
-{
+let inherit (import /home/jan/nixconf/dotfiles/overlays.nix) waylandOverlay;
+in {
   options = {
-    machine = mkOption {
-      type = types.enum [
-        "laptop"
-        "desktop"
-      ];
-    };
+    machine = mkOption { type = types.enum [ "laptop" "desktop" ]; };
   };
 
-  imports =
-    [
-      ./home.nix
-      ./users.nix
-    ];
+  imports = [ ./home.nix ./users.nix ];
 
   config = {
-    nixpkgs.overlays = [
-      waylandOverlay
-    ];
+    nixpkgs.overlays = [ waylandOverlay ];
 
-    nixpkgs.config = {
-      allowUnfree = true;
-    };
+    nixpkgs.config = { allowUnfree = true; };
 
-#    boot.supportedFilesystems = [ "ntfs" ];
+    #    boot.supportedFilesystems = [ "ntfs" ];
 
     security.sudo.enable = true;
     security.sudo.extraConfig = "Defaults pwfeedback";
@@ -48,11 +33,35 @@ in
     boot.loader.systemd-boot.enable = true;
     boot.loader.systemd-boot.consoleMode = "max";
     boot.loader.efi.canTouchEfiVariables = true;
-    # boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    networking.firewall = {
+      allowedUDPPorts = [
+        51820 # wireguard
+      ];
+      #allowedTCPPorts = [
+      #  22 # ssh
+      #];
+    };
 
     networking.networkmanager = {
-    enable = true;
-    # wifi.backend = "iwd";
+      enable = true;
+      unmanaged = [ "interface-name:wg*" ];
+     # dispatcherScripts = [{
+     #   source = pkgs.writeScript "up-fix-wireguard" ''
+     #     #!/bin/sh
+     #     case $2 in
+     #       up)
+     #         wg-quick up wg0
+     #         ip route add 188.214.158.10 via $IP4_GATEWAY
+     #         ;;
+     #       pre-down)
+     #         wg-quick down wg0
+     #         ;;
+     #     esac
+     #   '';
+     # }];
+      # wifi.backend = "iwd";
     };
 
     # Select internationalisation properties.
@@ -61,9 +70,7 @@ in
       keyMap = "neo";
     };
 
-    i18n = {
-      defaultLocale = "en_US.UTF-8";
-    };
+    i18n = { defaultLocale = "en_US.UTF-8"; };
 
     hardware = {
       pulseaudio = {
@@ -88,11 +95,11 @@ in
       # temporary revert to nixStable
       package = pkgs.nixStable;
       extraOptions = ''
-        keep-outputs = true
-#        experimental-features = nix-command flakes
-      '';
+                keep-outputs = true
+        #        experimental-features = nix-command flakes
+              '';
       autoOptimiseStore = true;
-      trustedUsers = ["@wheel"];
+      trustedUsers = [ "@wheel" ];
     };
 
     # System packages
@@ -100,7 +107,7 @@ in
       systemPackages = with pkgs; [
         git
         bup
-#        xboxdrv
+        #        xboxdrv
       ];
     };
 
@@ -123,8 +130,8 @@ in
         cache32Bit = true;
         defaultFonts = {
           monospace = [ "Source Code Pro" "DejaVu Sans Mono" ];
-          sansSerif = [  "DejaVu Sans" ];
-          serif = [  "DejaVu Serif" ];
+          sansSerif = [ "DejaVu Sans" ];
+          serif = [ "DejaVu Serif" ];
         };
       };
     };
@@ -148,24 +155,24 @@ in
     #   ];
     # };
 
-#    services.gvfs.enable = true;
+    #    services.gvfs.enable = true;
 
     programs.dconf.enable = true;
-#    programs.adb.enable = true;
+    #    programs.adb.enable = true;
 
     # Enable sound.
     sound.enable = true;
 
     programs.fish = {
       enable = true;
-       loginShellInit = ''
-         if not set -q SWAYSTARTED
-           if not set -q DISPLAY && test (tty) = /dev/tty1
-             set -g SWAYSTARTED 1
-             exec sway
-           end
-         end
-       '';
+      loginShellInit = ''
+        if not set -q SWAYSTARTED
+          if not set -q DISPLAY && test (tty) = /dev/tty1
+            set -g SWAYSTARTED 1
+            exec sway
+          end
+        end
+      '';
     };
 
     virtualisation.libvirtd = {
@@ -175,11 +182,11 @@ in
 
     fileSystems."/home/jan" = {
       device = "/dev/disk/by-label/HOME";
-      options = ["rw" "noatime"];
+      options = [ "rw" "noatime" ];
       encrypted = {
-       enable = true;
-       blkDev = "/dev/sda5";
-       label = "home";
+        enable = true;
+        blkDev = "/dev/sda5";
+        label = "home";
       };
     };
 
