@@ -163,6 +163,7 @@ in
     sqlite                    # A self-contained, serverless, zero-configuration SQL db engine
     jq                        # A lightweight and flexible command-line JSON processor
     git-secret                # A bash-tool to store your private data inside a git repository
+    clipman                  # A simple clipboard manager for Wayland
 
     # Dev
     (callPackage sizzy {})    # The browser for Developers & Designers

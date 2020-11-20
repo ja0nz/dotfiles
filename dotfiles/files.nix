@@ -10,7 +10,7 @@ in
 #  home.file.".agda/defaults".text = ''
 #    standard-library
 #  '';
-  home.file.".config/qutebrowser/autoconfig.yml".source = "${dots}/pkgs/qutebrowser/autoconfig.yml";
+#  home.file.".config/qutebrowser/autoconfig.yml".source = "${dots}/pkgs/qutebrowser/autoconfig.yml";
   home.file.".authinfo.gpg".source = "${dots}/protected/authinfo.gpg";
 #### Emacs - needs some cleanup #####
 #  home.file.".emacs.d/prelude-pinned-packages.el".source = "${dots}/pkgs/emacs/prelude-pinned-packages.el";
