@@ -34,7 +34,7 @@
   (setq yas-snippet-dirs '("~/.emacs.d/snippets")))
 
 (use-package org
-  :init (require 'helm-org)
+  :custom (org-modules (append org-modules '(helm-org org-habit)))
   :hook ((org-mode . (lambda () (org-bullets-mode) (org-indent-mode) (turn-on-visual-line-mode)))
          ;; (org-shiftup-final . windmove-up)
          ;; (org-shiftdown-final . windmove-down)
@@ -45,15 +45,17 @@
               ("M-s-g g" . counsel-org-goto))
   :config
   (setq org-directory "~/Dropbox/org/"
+        org-global-properties '(("Effort_ALL". "0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
         org-agenda-files
-        (cons
-         "~/Dropbox/org/_tags.org"
+        (append
+         '("~/Dropbox/org/_tags.org"
+           "~/Dropbox/org/_habits.org")
          (directory-files
           org-directory t
           (concat "^W" (format-time-string "%V"))))
         org-complete-tags-always-offer-all-agenda-tags t
         org-agenda-start-with-clockreport-mode t
-        org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2 :fileskip0 t :compact t :narrow 80 :tags t)
+        org-agenda-clockreport-parameter-plist '(:link t :properties ("ALLTAGS" "Effort") :fileskip0 t :compact t)
         org-capture-templates
         '(
           ;; ("a" "Appointment" entry (file  "~/emacs/gcal.org") "* %?\n  :PROPERTIES:\n  :calendar-id: jan.peteler@gmail.com\n  :END:\n:org-gcal:\n%^T--%^T\n:END:\n")
@@ -106,13 +108,17 @@
         ;;org-journal-file-format (concat org-journal-date-format ".org")
         ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
         org-journal-dir "~/Dropbox/org/")
-  :bind (:map org-journal-mode-map
-              (("M-s-n b" . org-journal-previous-entry)
-               ("M-s-n f" . org-journal-next-entry)
-               ("M-s-n s" . org-journal-search))
+  :bind (:map org-mode-map
+              (("M-s-n p" . org-set-property) ;; CATEGORY
+               ("M-s-n e" . org-set-effort) ;; Effort
+               ("M-s-n r" . org-pomodoro) ;; Run
+               ("M-s-n t" . org-set-tags-command) ;; Tag
+               ("M-s-n d" . org-update-all-dblocks) ;; Dblock
+               ("M-s-n f" . org-clock-csv-to-file)) ;; File
               :map global-map
-              (("M-s-n n" . org-journal-new-entry)
-               ("M-s-n m" . org-journal-new-scheduled-entry))))
+              (("M-s-n a" . org-agenda)
+               ("M-s-n n" . org-journal-new-entry) ;; Entry
+               ("M-s-n s" . org-journal-new-scheduled-entry)))) ;; Scheduled
 
 (defun clocktable-by-tag/shift-cell (n)
   (let ((str ""))

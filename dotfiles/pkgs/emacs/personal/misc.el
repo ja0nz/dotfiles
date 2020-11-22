@@ -27,6 +27,10 @@
   :bind (:map global-map
               (("M-x" . helm-M-x))))
 
+;;Export Clock Entries
+(use-package org-clock-csv
+  :ensure t)
+
 ;; TS
 (use-package typescript-mode
   :config (setq ts-comint-program-command "~/.yarn/bin/tsun")
