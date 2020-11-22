@@ -81,7 +81,7 @@ in
 
       startup = [
         { command = "dropbox start"; always = true; }
-        { command = "wl-paste -t text --watch clipman store"; always = false; }
+        { command = "wl-paste -t text --watch clipman store"; always = true; }
       ];
       input = {
 #        "2:7:SynPS/2_Synaptics_TouchPad" = {
