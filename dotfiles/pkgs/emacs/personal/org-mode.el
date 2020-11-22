@@ -35,12 +35,7 @@
 
 (use-package org
   :custom (org-modules (append org-modules '(helm-org org-habit)))
-  :hook ((org-mode . (lambda () (org-bullets-mode) (org-indent-mode) (turn-on-visual-line-mode)))
-         ;; (org-shiftup-final . windmove-up)
-         ;; (org-shiftdown-final . windmove-down)
-         ;; (org-shiftleft-final . windmove-left)
-         ;; (org-shiftright-final . windmove-right)
-         )
+  :hook ((org-mode . (lambda () (org-bullets-mode) (org-indent-mode) (turn-on-visual-line-mode))))
   :bind (:map org-mode-map
               ("M-s-g g" . counsel-org-goto))
   :config
@@ -56,25 +51,16 @@
         org-complete-tags-always-offer-all-agenda-tags t
         org-agenda-start-with-clockreport-mode t
         org-agenda-clockreport-parameter-plist '(:link t :properties ("ALLTAGS" "Effort") :fileskip0 t :compact t)
-        org-capture-templates
-        '(
-          ;; ("a" "Appointment" entry (file  "~/emacs/gcal.org") "* %?\n  :PROPERTIES:\n  :calendar-id: jan.peteler@gmail.com\n  :END:\n:org-gcal:\n%^T--%^T\n:END:\n")
-          ;; ("l" "Timeline - current buffer!" entry (file+headline (lambda () (buffer-file-name)) "Timeline")) "* %t\n- %?" :prepend t)
-          ;; ("c" "TODOs - current buffer!" entry (file+headline (lambda () (buffer-file-name)) "TODOs") "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))" :prepend t)
-          ;; ("w" "writing" entry (file+headline "~/Dropbox/org/writings.org" "UNSORTED") "* %?\n%U" :prepend t)
-          ;; ("t" "todo" entry (file+headline "~/Dropbox/org/todos.org" "UNSORTED") "* TODO [#A] %?\nSCHEDULED: %t\n%a\n" :prepend t)
-          ;; ("s" "scratch" entry (file "~/Dropbox/org/scratch.org") "* %?\n%u" :prepend t)
-          ("b" "bookmark" entry (file+headline "~/Dropbox/org/20200812162016-bookmarks.org" "UNSORTED") "* %?\n%u")
-          ("p" "project" entry (file+headline "~/Dropbox/org/20200823100043-projects.org" "UNSORTED") "* %?\n%u"))
         org-support-shift-select 'always
         org-goto-interface 'outline-path-completion
         org-outline-path-complete-in-steps nil
+        org-capture-templates
+        '(("i" "Daily input, add some tags" entry (file (lambda () (buffer-file-name))) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: in\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
+          ("o" "Daily output, add some tags" entry (file (lambda () (buffer-file-name))) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
+          )
         org-refile-targets
-        '(("~/Dropbox/org/bookmarks.org" :maxlevel . 1)
-          ("~/Dropbox/org/todos.org" :maxlevel . 1)
-          ("~/Dropbox/org/writings.org" :maxlevel . 1)
-          ("~/Dropbox/org/projects.org" :maxlevel . 1))))
-
+        '((nil :maxlevel . 2)
+          ("~/Dropbox/org/_history.org" :maxlevel . 1))))
 
 (use-package org-roam
   :hook
@@ -120,44 +106,57 @@
                ("M-s-n n" . org-journal-new-entry) ;; Entry
                ("M-s-n s" . org-journal-new-scheduled-entry)))) ;; Scheduled
 
-(defun clocktable-by-tag/shift-cell (n)
-  (let ((str ""))
-    (dotimes (i n)
-      (setq str (concat str "| ")))
-    str))
+;; (defun clocktable-by-tag/shift-cell (n)
+;;   (let ((str ""))
+;;     (dotimes (i n)
+;;       (setq str (concat str "| ")))
+;;     str))
 
-(defun clocktable-by-tag/insert-tag (params)
-  (let ((tag (plist-get params :tags)))
-    (insert "|--\n")
-    (insert (format "| %s | *Tag time* |\n" tag))
-    (let ((total 0))
-      (mapcar
-       (lambda (file)
-         (let ((clock-data (with-current-buffer (find-file-noselect file)
-                             (org-clock-get-table-data (buffer-name) params))))
-           (when (> (nth 1 clock-data) 0)
-             (setq total (+ total (nth 1 clock-data)))
-             (insert (format "| | File *%s* | %.2f |\n"
-                             (file-name-nondirectory file)
-                             (/ (nth 1 clock-data) 60.0)))
-             (dolist (entry (nth 2 clock-data))
-               (insert (format "| | . %s%s | %s %.2f |\n"
-                               (org-clocktable-indent-string (nth 0 entry))
-                               (nth 1 entry)
-                               (clocktable-by-tag/shift-cell (nth 0 entry))
-                               (/ (nth 4 entry) 60.0)))))))
-       (org-agenda-files))
-      (save-excursion
-        (re-search-backward "*Tag time*")
-        (org-table-next-field)
-        (org-table-blank-field)
-        (insert (format "*%.2f*" (/ total 60.0)))))
-    (org-table-align)))
+;; (defun clocktable-by-tag/insert-tag (params)
+;;   (let ((tag (plist-get params :tags)))
+;;     (insert "|--\n")
+;;     (insert (format "| %s | *Tag time* |\n" tag))
+;;     (let ((total 0))
+;;       (mapcar
+;;        (lambda (file)
+;;          (let ((clock-data (with-current-buffer (find-file-noselect file)
+;;                              (org-clock-get-table-data (buffer-name) params))))
+;;            (when (> (nth 1 clock-data) 0)
+;;              (setq total (+ total (nth 1 clock-data)))
+;;              (insert (format "| | File *%s* | %.2f |\n"
+;;                              (file-name-nondirectory file)
+;;                              (/ (nth 1 clock-data) 60.0)))
+;;              (dolist (entry (nth 2 clock-data))
+;;                (insert (format "| | . %s%s | %s %.2f |\n"
+;;                                (org-clocktable-indent-string (nth 0 entry))
+;;                                (nth 1 entry)
+;;                                (clocktable-by-tag/shift-cell (nth 0 entry))
+;;                                (/ (nth 4 entry) 60.0)))))))
+;;        (org-agenda-files))
+;;       (save-excursion
+;;         (re-search-backward "*Tag time*")
+;;         (org-table-next-field)
+;;         (org-table-blank-field)
+;;         (insert (format "*%.2f*" (/ total 60.0)))))
+;;     (org-table-align)))
 
-(defun org-dblock-write:clocktable-by-tag (params)
-  (insert "| Tag | Headline | Time (h) |\n")
-  (insert "|     |          | <r>  |\n")
-  (let ((tags (plist-get params :tags)))
-    (mapcar (lambda (tag)
-              (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
-            tags)))
+;; (defun org-dblock-write:clocktable-by-tag (params)
+;;   (insert "| Tag | Headline | Time (h) |\n")
+;;   (insert "|     |          | <r>  |\n")
+;;   (let ((tags (plist-get params :tags)))
+;;     (mapcar (lambda (tag)
+;;               (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
+;;             tags)))
+
+
+;; Just for reference
+;; org-capture-templates
+;; '(
+;;   ;; ("a" "Appointment" entry (file  "~/emacs/gcal.org") "* %?\n  :PROPERTIES:\n  :calendar-id: jan.peteler@gmail.com\n  :END:\n:org-gcal:\n%^T--%^T\n:END:\n")
+;;   ;; ("l" "Timeline - current buffer!" entry (file+headline (lambda () (buffer-file-name)) "Timeline")) "* %t\n- %?" :prepend t)
+;;   ;; ("c" "TODOs - current buffer!" entry (file+headline (lambda () (buffer-file-name)) "TODOs") "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))" :prepend t)
+;;   ;; ("w" "writing" entry (file+headline "~/Dropbox/org/writings.org" "UNSORTED") "* %?\n%U" :prepend t)
+;;   ;; ("t" "todo" entry (file+headline "~/Dropbox/org/todos.org" "UNSORTED") "* TODO [#A] %?\nSCHEDULED: %t\n%a\n" :prepend t)
+;;   ;; ("s" "scratch" entry (file "~/Dropbox/org/scratch.org") "* %?\n%u" :prepend t)
+;;   ("b" "bookmark" entry (file+headline "~/Dropbox/org/20200812162016-bookmarks.org" "UNSORTED") "* %?\n%u")
+;;   ("p" "project" entry (file+headline "~/Dropbox/org/20200823100043-projects.org" "UNSORTED") "* %?\n%u"))
