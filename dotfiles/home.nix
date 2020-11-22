@@ -22,6 +22,7 @@ with lib;
       ./lorri.nix
       ./gpg.nix
       ./ssh.nix
+      ./udiskie.nix
     ];
 
     options = {

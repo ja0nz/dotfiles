@@ -30,20 +30,6 @@
         Restart = "always";
       };
     };
-    udiskie = {
-      Unit = {
-        Description = pkgs.udiskie.meta.description;
-        PartOf = [ "graphical-session.target" ];
-      };
-      Install = {
-        WantedBy = [ "sway-session.target" ];
-      };
-      Service = {
-        ExecStart = "${pkgs.udiskie}/bin/udiskie";
-        RestartSec = 3;
-        Restart = "always";
-      };
-    };
     emacs = {
       Unit = {
         Description = "Emacs text editor";
