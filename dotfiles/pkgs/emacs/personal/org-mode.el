@@ -53,9 +53,25 @@
         '((nil :maxlevel . 2)
           ("~/Dropbox/org/_history.org" :maxlevel . 1))))
 
+
+(defun org_roam__bump_revision_date ()
+  "Retriving REVISION and replace it naively with current time stamp."
+  (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION")))))))
+    (let ((today (format-time-string (org-time-stamp-format))))
+      (cond ((not lastrev) nil)
+            ((not (string= lastrev today))
+             (progn
+               (push-mark)
+               (re-search-backward "REVISION" nil 1)
+               (while (re-search-forward lastrev nil 1)
+                 (replace-match today))
+               (pop-global-mark)))))))
+
 (use-package org-roam
-  :hook
-  (after-init . org-roam-mode)
+  :hook (
+         (after-init . org-roam-mode)
+         (org-mode . (lambda () (add-hook 'after-save-hook 'org_roam__bump_revision_date nil t)))
+         )
   :init (require 'org-roam-protocol)
   :custom
   (org-roam-directory "~/Dropbox/org/")
@@ -75,22 +91,8 @@
               :map global-map
               (("M-s-s f" . org-roam-find-file)))) ;; quickly jump in / New
 
-(defun org_journal__bump_revision_date ()
-  "Retriving REVISION and replace it naively with current time stamp"
-  (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION")))))))
-    (let ((today (format-time-string (org-time-stamp-format))))
-      (cond ((not lastrev) nil)
-            ((not (string= lastrev today))
-             (progn
-               (push-mark)
-               (re-search-backward "REVISION" nil 1)
-               (while (re-search-forward lastrev nil 1)
-                 (replace-match today))
-               (pop-global-mark)))))))
-
 (use-package org-journal
   :ensure t
-  :hook (org-mode . (lambda () (add-hook 'after-save-hook 'org_journal__bump_revision_date nil t)))
   :config
   (setq org-journal-date-prefix "#+title: "
         org-journal-time-prefix "* "
