@@ -9,12 +9,12 @@ settings:
   qt.force_platform:
     global: wayland
   url.default_page:
-    global: https://startpage.com/
+    global: https://runnaroo.com
   url.searchengines:
     global:
-      DEFAULT: https://startpage.com/do/dsearch?query={}
+      DEFAULT: https://runnaroo.com/search?term={}
   url.start_pages:
-    global: https://startpage.com
+    global: https://runnaroo.com
   content.register_protocol_handler:
     https://calendar.google.com?cid=%25s: true
     https://mail.google.com?extsrc=mailto&url=%25s: false

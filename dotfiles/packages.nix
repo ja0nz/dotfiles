@@ -71,7 +71,7 @@ in
     playerctl                 # Command-line utility for controlling media players that implement MPRIS
 #    xlibs.xeyes
 #    veracrypt                 # Free Open-Source filesystem on-the-fly encryption
-#    libnotify                 # A library that sends desktop notifications to a notification daemon
+    libnotify                 # A library that sends desktop notifications to a notification daemon
 #    libappindicator           # A library to allow applications to export a menu into the Unity Menu bar
     bitwarden-cli             # A secure and free password manager for all of your devices.
     xdg_utils                 # A set of command line tools that assist applications desktop integration

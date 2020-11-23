@@ -21,7 +21,7 @@ in
 
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
-    BROWSER = "firefox";
+    BROWSER = "qutebrower";
     PATH = "/home/jan/.yarn/bin:$PATH";
   };
 
@@ -30,11 +30,11 @@ in
     enable = true;
     defaultApplications = {
       "application/pdf" = [ "okular.desktop" ];
-      "text/html" = [ "firefox.desktop" "qutebrowser.desktop"];
-      "x-scheme-handler/http" = [ "firefox.desktop" "qutebrowser.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" "qutebrowser.desktop" ];
-      "x-scheme-handler/ftp" = [ "firefox.desktop" "qutebrowser.desktop" ];
-      "x-scheme-handler/chrome" = [ "firefox.desktop" "qutebrower.desktop" ];
+      "text/html" = [ "qutebrowser.desktop" ];
+      "x-scheme-handler/http" = [ "qutebrowser.desktop" ];
+      "x-scheme-handler/https" = [ "qutebrowser.desktop" ];
+      "x-scheme-handler/ftp" = [ "qutebrowser.desktop" ];
+      "x-scheme-handler/chrome" = [ "qutebrower.desktop" ];
       "x-scheme-handler/org-protocol" = [ "org-protocol.desktop" ];
     };
   };

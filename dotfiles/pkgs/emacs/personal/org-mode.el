@@ -15,7 +15,18 @@
 
 (use-package org-pomodoro
   :ensure t
-  :bind (("M-s-t t" . org-pomodoro)))
+  :bind (("M-s-t t" . org-pomodoro))
+  :config
+  (setq org-pomodoro-audio-player (executable-find "notify-send")
+        org-pomodoro-start-sound-p t
+        org-pomodoro-killed-sound-p t
+        org-pomodoro-start-sound " *org-pomodoro* - ⏱START⏱"
+        org-pomodoro-finished-sound " *org-pomodoro* - 🏃FINISH🏃"
+        org-pomodoro-overtime-sound " *org-pomodoro* - ⏰OVERTIME⏰"
+        org-pomodoro-killed-sound " *org-pomodoro* - 💀KILLED💀"
+        org-pomodoro-short-break-sound " *org-pomodoro* - 🍰SHORT BREAK🍰"
+        org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK🍖"
+        org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁"))
 
 (use-package yasnippet
   :ensure t
@@ -112,6 +123,7 @@
               (("M-s-n a" . org-agenda)
                ("M-s-n n" . org-journal-new-entry) ;; Entry
                ("M-s-n s" . org-journal-new-scheduled-entry)))) ;; Scheduled
+
 
 
 ;; (use-package org-gcal
