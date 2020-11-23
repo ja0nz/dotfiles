@@ -17,15 +17,6 @@
   :ensure t
   :bind (("M-s-t t" . org-pomodoro)))
 
-;; (use-package org-gcal
-;;   :ensure t
-;;   :hook (org-agenda-mode . org-gcal-sync)
-;;   :bind ("C-c M-k" . org-gcal-delete-at-point)
-;;   :config
-;;   (setq org-gcal-client-id "27237116424-qrn48jq6lt96ffci0c4u2refdl4bsogr.apps.googleusercontent.com"
-;;         org-gcal-client-secret "123"
-;;         org-gcal-file-alist '(("jan.peteler@gmail.com" .  "~/emacs/gcal.org"))))
-
 (use-package yasnippet
   :ensure t
   :init
@@ -74,7 +65,7 @@
         '(("d" "default" plain (function org-roam-capture--get-point)
            "%?"
            :file-name "%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+title: ${title}\n#+STARTUP: fold\n"
+           :head "#+title: ${title}\n#+STARTUP: fold\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n"
            :unnarrowed t)))
   :bind (:map org-roam-mode-map
               (("M-s-s l" . org-roam) ;; show links
@@ -84,8 +75,22 @@
               :map global-map
               (("M-s-s f" . org-roam-find-file)))) ;; quickly jump in / New
 
+(defun org_journal__bump_revision_date ()
+  "Retriving REVISION and replace it naively with current time stamp"
+  (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION")))))))
+    (let ((today (format-time-string (org-time-stamp-format))))
+      (cond ((not lastrev) nil)
+            ((not (string= lastrev today))
+             (progn
+               (push-mark)
+               (re-search-backward "REVISION" nil 1)
+               (while (re-search-forward lastrev nil 1)
+                 (replace-match today))
+               (pop-global-mark)))))))
+
 (use-package org-journal
   :ensure t
+  :hook (org-mode . (lambda () (add-hook 'after-save-hook 'org_journal__bump_revision_date nil t)))
   :config
   (setq org-journal-date-prefix "#+title: "
         org-journal-time-prefix "* "
@@ -105,6 +110,16 @@
               (("M-s-n a" . org-agenda)
                ("M-s-n n" . org-journal-new-entry) ;; Entry
                ("M-s-n s" . org-journal-new-scheduled-entry)))) ;; Scheduled
+
+
+;; (use-package org-gcal
+;;   :ensure t
+;;   :hook (org-agenda-mode . org-gcal-sync)
+;;   :bind ("C-c M-k" . org-gcal-delete-at-point)
+;;   :config
+;;   (setq org-gcal-client-id "27237116424-qrn48jq6lt96ffci0c4u2refdl4bsogr.apps.googleusercontent.com"
+;;         org-gcal-client-secret "123"
+;;         org-gcal-file-alist '(("jan.peteler@gmail.com" .  "~/emacs/gcal.org"))))
 
 ;; (defun clocktable-by-tag/shift-cell (n)
 ;;   (let ((str ""))
