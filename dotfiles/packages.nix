@@ -16,7 +16,7 @@ in
     binutils                 # Tools for manipulating binaries (linker, assembler, etc.)
     # zoom-us                  # zoom.us video conferencing application
     # styx                     # Nix based static site generator
-    manix                    # A Fast Documentation Searcher for Nix
+    # manix                    # A Fast Documentation Searcher for Nix
 
     # CLI Programs
 #    neofetch                 # A fast, highly customizable system info script
@@ -141,7 +141,6 @@ in
     httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
     nmap                      # A free and open source utility for network discovery and security auditing
     tcpdump                   # Network sniffer
-    wireguard                 # Tools for the WireGuard secure network tunnel
     gnutls                    # The GNU Transport Layer Security Library
     nomachine-client          # NoMachine Remote Desktop Client
 

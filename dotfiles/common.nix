@@ -33,34 +33,10 @@ in {
     boot.loader.systemd-boot.enable = true;
     boot.loader.systemd-boot.consoleMode = "max";
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-
-    networking.firewall = {
-      allowedUDPPorts = [
-        51820 # wireguard
-      ];
-      #allowedTCPPorts = [
-      #  22 # ssh
-      #];
-    };
+    # boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.networkmanager = {
       enable = true;
-      unmanaged = [ "interface-name:wg*" ];
-     # dispatcherScripts = [{
-     #   source = pkgs.writeScript "up-fix-wireguard" ''
-     #     #!/bin/sh
-     #     case $2 in
-     #       up)
-     #         wg-quick up wg0
-     #         ip route add 188.214.158.10 via $IP4_GATEWAY
-     #         ;;
-     #       pre-down)
-     #         wg-quick down wg0
-     #         ;;
-     #     esac
-     #   '';
-     # }];
       # wifi.backend = "iwd";
     };
 
