@@ -1,13 +1,17 @@
 {
   emacsOverlay = import <emacs>;
 
-  waylandOverlay = import <nixpkgs-wayland>;
-
 #  nixmacsOverlay = self: super: {
 #    nixmacs = (self.pkgs.callPackage (/home/alex/nixmacs) {
 #      configurationFile = /home/alex/dotfiles/nixmacsConf.nix;
 #    });
 #  };
+
+  fmt6overlay = self: super: {
+    fmt_6 = super.fmt;
+  };
+
+  myWaylandOverlay = self: super: builtins.removeAttrs (import <nixpkgs-wayland> self super) [ ];
 
 #  cattOverlay = self: super: {
 #    catt = (self.pkgs.callPackage ./pkgs/catt { });

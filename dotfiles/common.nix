@@ -2,7 +2,7 @@
 
 with lib;
 
-let inherit (import /home/jan/nixconf/dotfiles/overlays.nix) waylandOverlay;
+let inherit (import /home/jan/nixconf/dotfiles/overlays.nix) myWaylandOverlay;
 in {
   options = {
     machine = mkOption { type = types.enum [ "laptop" "desktop" ]; };
@@ -11,7 +11,7 @@ in {
   imports = [ ./home.nix ./users.nix ];
 
   config = {
-    nixpkgs.overlays = [ waylandOverlay ];
+    nixpkgs.overlays = [ myWaylandOverlay ];
 
     nixpkgs.config = { allowUnfree = true; };
 
@@ -68,12 +68,9 @@ in {
     time.timeZone = "Europe/Berlin";
 
     nix = {
-      # temporary revert to nixStable
-      package = pkgs.nixStable;
       extraOptions = ''
-                keep-outputs = true
-        #        experimental-features = nix-command flakes
-              '';
+        keep-outputs = true
+      '';
       autoOptimiseStore = true;
       trustedUsers = [ "@wheel" ];
     };
@@ -85,6 +82,7 @@ in {
         bup
         #        xboxdrv
       ];
+      homeBinInPath = true;
     };
 
     # Load fonts
@@ -117,11 +115,11 @@ in {
 
       geoclue2.enable = true;
 
-      xserver = {
-        enable = true;
-        desktopManager.plasma5.enable = true;
-        displayManager.startx.enable = true;
-      };
+      # xserver = {
+      #   enable = true;
+      #   desktopManager.plasma5.enable = true;
+      #   displayManager.startx.enable = true;
+      # };
     };
 
     # xdg.portal = {

@@ -1,9 +1,8 @@
 { pkgs, ... }:
 
 {
-  services.redshift = {
+  services.gammastep = {
     enable = true;
-    package = pkgs.gammastep;
     provider = "geoclue2";
     tray = true;
   };

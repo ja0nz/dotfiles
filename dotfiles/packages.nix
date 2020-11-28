@@ -14,7 +14,7 @@ in
 #    catt
     pinentry                 # GnuPG’s interface to passphrase input
     binutils                 # Tools for manipulating binaries (linker, assembler, etc.)
-    # zoom-us                  # zoom.us video conferencing application
+    # my-zoom                  # zoom.us video conferencing application
     # styx                     # Nix based static site generator
     # manix                    # A Fast Documentation Searcher for Nix
 
@@ -41,17 +41,20 @@ in
     gitAndTools.git-extras   # GIT utilities -- repo summary, repl, changelog population
 
     # Things in sway config
-    j4-dmenu-desktop         # A wrapper for dmenu that recognize .desktop files
-#    bemenu                   # Dynamic menu library and client program inspired by dmenu
     dropbox-cli              # Command line client for the dropbox daemon
     networkmanager_dmenu     # Small script to manage NetworkManager connections with dmenu
     networkmanagerapplet     # NetworkManager control applet for GNOME
     dmenu                    # A generic, highly customizable, and efficient menu for the X Window System
+
+    # Nix
+    nixpkgs-fmt              # Nix code formatter for nixpkgs
+#    nix-review
+    nix-info                 #
     nix-index                # A files database for nixpkgs
     direnv                   # A shell extension that manages your environment
 
     # GTK
-#    hicolor-icon-theme       # Default fallback theme used by implementations of the icon theme specification
+    hicolor-icon-theme       # Default fallback theme used by implementations of the icon theme specification
 
     # Dictionaries
     aspell                   # Spell checker for many languages
@@ -70,7 +73,6 @@ in
     udiskie                   # Removable disk automounter for udisks
     playerctl                 # Command-line utility for controlling media players that implement MPRIS
 #    xlibs.xeyes
-#    veracrypt                 # Free Open-Source filesystem on-the-fly encryption
     libnotify                 # A library that sends desktop notifications to a notification daemon
 #    libappindicator           # A library to allow applications to export a menu into the Unity Menu bar
     bitwarden-cli             # A secure and free password manager for all of your devices.
@@ -78,7 +80,7 @@ in
 
     # Desktop environment
     (mate.caja-with-extensions.override { extensions = [ mate.caja-extensions mate.caja-dropbox ]; })
-#    mate.eom                  # An image viewing and cataloging program for the MATE desktop
+    mate.eom                  # An image viewing and cataloging program for the MATE desktop
 #    glib                      # C library of programming buildings blocks
 
     # LaTeX
@@ -88,14 +90,8 @@ in
 #    (haskellPackages.ghcWithHoogle
 #    (haskellPackages: with haskellPackages; [
 #      lens
-#      arrows
-#      process
 #      containers
 #      parsec
-#      multimap
-#      quickcheck-with-counterexamples
-#      cassava
-#      diagrams
 #      ieee
 #      filemanip
 #    ]))
@@ -103,7 +99,7 @@ in
 #    # cabal-bin
 #    cabal-install
 #    cabal2nix
-#    python3
+    python3
 #    coqPackages_8_12.coq
 
     # Programs
@@ -123,7 +119,6 @@ in
     # Games
 #    steam
 #    sgtpuzzles
-#    dwarf-fortress-packages.dwarf-fortress-full
 #    steam-run-native
 #    wine
 #    winetricks
