@@ -7,4 +7,4 @@ dotfiles/protected/nomachine/id_nomachine_rsa
 dotfiles/protected/ssh/id_peteler.family_ed25519
 dotfiles/protected/nomachine/Arbeitszimmer_Port_4001.nxs
 dotfiles/protected/nomachine/Mum_Port_4002.nxs
-dotfiles/pkgs/sizzy/Sizzy-*.AppImage
+*.AppImage

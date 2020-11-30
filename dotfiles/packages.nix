@@ -3,6 +3,7 @@
 let
 #  cabal-bin = pkgs.callPackage (import ./pkgs/agda-2.6.2.nix) { };
   sizzy = import ./pkgs/sizzy;
+  mymonero = import ./pkgs/mymonero;
 in
 {
   home.packages = with pkgs; [
@@ -131,6 +132,7 @@ in
     virtmanager               # Desktop user interface for managing virtual machines
 
     # Net
+    (callPackage mymonero {}) # MyMonero Desktop Wallet
     mtr                       # A network diagnostics tool
     croc                      # Easily and securely send things from one computer to another
     httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
