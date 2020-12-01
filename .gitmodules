@@ -1,0 +1,3 @@
+[submodule "dotfiles/pkgs/qutebrowser/dracula"]
+	path = dotfiles/pkgs/qutebrowser/dracula
+	url = https://github.com/dracula/qutebrowser

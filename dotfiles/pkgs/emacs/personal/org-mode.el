@@ -56,6 +56,7 @@
         org-support-shift-select 'always
         org-goto-interface 'outline-path-completion
         org-outline-path-complete-in-steps nil
+        org-edit-src-content-indentation 0
         org-capture-templates
         '(("i" "Daily input, add some tags" entry (file (lambda () (buffer-file-name))) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: in\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
           ("o" "Daily output, add some tags" entry (file (lambda () (buffer-file-name))) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
