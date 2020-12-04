@@ -1,14 +1,11 @@
 #!/bin/sh
 
-filestart="$HOME/Pictures/screenshot"
-number=0
-while test -e "$filestart$number.png"; do
-    (( ++number))
-done
+filestart="$HOME/Pictures/screenshot_"
+ts=$(date +'%Y-%m-%d-%H:%M:%S')
 
-fname="$filestart$number.png"
+fname="$filestart$ts.png"
 
-if [ $1 = "full" ]; then
+if [ "$1" = "full" ]; then
     grim $fname
 else
     grim -g "$(slurp)" $fname
