@@ -24,32 +24,9 @@
   (mu4e-compose-context-policy nil)
   (mu4e-html2text-command "iconv -c -t utf-8 | pandoc -f html -t plain")
   (mu4e-contexts `( ,(make-mu4e-context
-                      :name "Private"
-                      :enter-func (lambda () (mu4e-message "Enter Private context"))
-                      :leave-func (lambda () (mu4e-message "Leaving Private context"))
-                      :match-func (lambda (msg)
-                                    (when msg
-                                      (mu4e-message-contact-field-matches msg :to "jan@peteler.email")))
-                      :vars '((user-mail-address . "jan@peteler.email")
-                              (user-full-name . "Jan Peteler")
-                              (mu4e-refile-folder . "/jan@peteler.email/Archive")
-                              (mu4e-sent-folder . "/jan@peteler.email/Sent")
-                              (mu4e-trash-folder . "/jan@peteler.email/Trash")
-                              (mu4e-drafts-folder . "/jan@peteler.email/Drafts")
-                              (mu4e-maildir-shortcuts . (("/jan@peteler.email/Inbox" . ?i)
-                                                         ("/jan@peteler.email/Archive" . ?I)
-                                                         ("/jan@peteler.email/Trash" . ?d)
-                                                         ("/jan@peteler.email/Drafts" . ?D)
-                                                         ("/jan@peteler.email/Sent" . ?s)))
-                              ;; SMTP
-                              (smtpmail-smtp-server . "smtp.purelymail.com")
-                              (smtpmail-smtp-service . 587)
-                              (smtpmail-smtp-user . "jan@peteler.email")
-                              (smtpmail-stream-type . starttls)))
-                    ,(make-mu4e-context
-                      :name "Work"
-                      :enter-func (lambda () (mu4e-message "Enter Work context"))
-                      :leave-func (lambda () (mu4e-message "Leaving Work context"))
+                      :name "Home"
+                      :enter-func (lambda () (mu4e-message "Enter Home context"))
+                      :leave-func (lambda () (mu4e-message "Leaving Home context"))
                       :match-func (lambda (msg)
                                     (when msg
                                       (mu4e-message-contact-field-matches msg :to "mail@ja.nz")))
