@@ -49,6 +49,13 @@
 (use-package js2-mode
   :config (setq js2-basic-offset 2))
 
+;;JSX
+(use-package rjsx-mode
+  :ensure t
+  :init (progn
+          (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+          (add-to-list 'auto-mode-alist '("pages\\/.*\\.js\\'" . rjsx-mode))))
+
 ;; (use-package zig-mode
 ;;   :hook (zig-mode . (lambda ()
 ;;                        (lsp)
