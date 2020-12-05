@@ -115,6 +115,8 @@ in {
 
       geoclue2.enable = true;
 
+      blueman.enable = true;
+
       # xserver = {
       #   enable = true;
       #   desktopManager.plasma5.enable = true;

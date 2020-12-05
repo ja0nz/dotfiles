@@ -23,6 +23,7 @@ with lib;
       ./gpg.nix
       ./ssh.nix
       ./udiskie.nix
+      ./blueman.nix
     ];
 
     options = {

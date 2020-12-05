@@ -69,7 +69,6 @@ in
     swaylock                 # Screen locker for Wayland
 
     # Utilities
-    blueman                  # GTK-based Bluetooth Manager
     pavucontrol               # PulseAudio Volume Control
     udiskie                   # Removable disk automounter for udisks
     playerctl                 # Command-line utility for controlling media players that implement MPRIS

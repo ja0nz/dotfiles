@@ -90,6 +90,10 @@ in
         "1739:0:Synaptics_TM3072-003" = {
           natural_scroll = "enabled";
         };
+        "2652:1:Bluetooth_Mouse_4.0" = {
+          accel_profile = "adaptive";
+          pointer_accel = "-0.4";
+        };
         "*" = if config.machine == "laptop" then {
           xkb_layout = "de,de";
           xkb_variant = "neo,";
