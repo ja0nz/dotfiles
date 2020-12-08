@@ -29,6 +29,11 @@
 
       tlp.enable = true;
       logind.lidSwitch = "ignore";
+
+      # Udev killswitch
+      udev.extraRules = ''
+        ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${pkgs.systemd}/bin/shutdown -h now"
+      '';
     };
   };
 }
