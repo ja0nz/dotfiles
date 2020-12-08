@@ -7,6 +7,7 @@ in
 #  home.file.".ghc/ghci.conf".source = "${dots}/ghci.conf";
   home.file.".config/waybar/config".source = "${dots}/waybar";
   home.file.".config/waybar/style.css".source = "${dots}/waybar.css";
+  home.file.".config/udiskie/config.yml".source = "${dots}/udiskie.yml";
   home.file.".authinfo.gpg".source = "${dots}/protected/authinfo.gpg";
 #  home.sessionPath = [ "~/.cabal/bin" ];
 }
