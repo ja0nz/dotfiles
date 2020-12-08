@@ -8,3 +8,4 @@ dotfiles/protected/ssh/id_peteler.family_ed25519
 dotfiles/protected/nomachine/Arbeitszimmer_Port_4001.nxs
 dotfiles/protected/nomachine/Mum_Port_4002.nxs
 *.AppImage
+dotfiles/protected/killswitch_random_keyfile
