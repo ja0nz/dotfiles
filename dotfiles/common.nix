@@ -5,7 +5,13 @@ with lib;
 let inherit (import /home/jan/nixconf/dotfiles/overlays.nix) myWaylandOverlay;
 in {
   options = {
-    machine = mkOption { type = types.enum [ "laptop" "desktop" ]; };
+    machine = mkOption {
+      type = types.enum [
+        "laptop"
+        "desktop"
+        "rpi"
+      ];
+    };
   };
 
   imports = [ ./home.nix ./users.nix ];
@@ -27,12 +33,18 @@ in {
         export XDG_SESSION_TYPE=wayland
         systemctl --user import-environment
       '';
+      extraPackages = [];
     };
 
-    # Use the systemd-boot EFI boot loader.
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.systemd-boot.consoleMode = "max";
-    boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader = if config.machine == "rpi" then {
+       grub.enable = false;
+       generic-extlinux-compatible.enable = true;
+    } else {
+      # Use the systemd-boot EFI boot loader.
+      systemd-boot.enable = true;
+      systemd-boot.consoleMode = "max";
+      efi.canTouchEfiVariables = true;
+    };
     # boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.networkmanager = {
@@ -51,7 +63,7 @@ in {
     hardware = {
       pulseaudio = {
         enable = true;
-        support32Bit = true;
+        support32Bit = mkIf (config.machine != "rpi") true;
         extraModules = [ pkgs.pulseaudio-modules-bt ];
         package = pkgs.pulseaudioFull;
       };
@@ -60,7 +72,7 @@ in {
         package = pkgs.bluezFull;
       };
       opengl.enable = true;
-      opengl.driSupport32Bit = true;
+      opengl.driSupport32Bit = mkIf (config.machine != "rpi") true;
       brillo.enable = true;
     };
 
@@ -70,6 +82,7 @@ in {
     nix = {
       extraOptions = ''
         keep-outputs = true
+        keep-derivations = true
       '';
       autoOptimiseStore = true;
       trustedUsers = [ "@wheel" ];
@@ -80,7 +93,6 @@ in {
       systemPackages = with pkgs; [
         git
         bup
-        #        xboxdrv
       ];
       homeBinInPath = true;
     };
@@ -96,7 +108,8 @@ in {
         noto-fonts
         # nerdfonts
         fira-code
-      ];
+      ] ++ optional (config.machine != "rpi") noto-fonts;
+      enableDefaultFonts = mkIf (config.machine == "rpi") false;
 
       fontconfig = {
         enable = true;
@@ -131,10 +144,10 @@ in {
     #   ];
     # };
 
-    #    services.gvfs.enable = true;
+#    services.gvfs.enable = mkIf (config.machine != "rpi") true;
 
-    programs.dconf.enable = true;
-    #    programs.adb.enable = true;
+    programs.dconf.enable = mkIf (config.machine != "rpi") true;
+#    programs.adb.enable = mkIf (config.machine != "rpi") true;
 
     # Enable sound.
     sound.enable = true;

@@ -19,7 +19,6 @@ with lib;
       ./systemd.nix
       ./sway.nix
       ./emails.nix
-      ./lorri.nix
       ./gpg.nix
       ./ssh.nix
       ./udiskie.nix
@@ -40,6 +39,7 @@ with lib;
         type = types.enum [
           "laptop"
           "desktop"
+          "rpi"
         ];
       };
     };
@@ -50,6 +50,7 @@ with lib;
       nixpkgs.config = {
         allowBroken = true;
         allowUnfree = true;
+        allowUnsupportedSystem = true;
         oraclejdk.accept_license = true;
       };
 

@@ -1,21 +1,31 @@
+
 { config, pkgs, lib, ... }:
 
 {
   imports = [
-    ./users.nix
+    ./common.nix
   ];
 
   config = {
+    machine = "rpi";
+
+    nixpkgs.config.allowUnsupportedSystem = true;
+
     nixpkgs.overlays = [
       (self: super: {
         python37 = super.python37.override {
-	  packageOverrides = pself: psuper: {
-	    gspread = (import ../nixpkgs { }).python37Packages.gspread;
-	  };
-	};
+	        packageOverrides = pself: psuper: {
+	          discordpy = psuper.discordpy.overrideAttrs(attrs: {
+              patchPhase = ''
+                substituteInPlace "requirements.txt" \
+                  --replace "aiohttp>=3.6.0,<3.7.0" "aiohttp>=3.6.0,<3.8.0" \
+              '';
+            });
+	        };
+	      };
       })
     ];
-    
+
     boot.loader.grub.enable = false;
     boot.loader.generic-extlinux-compatible.enable = true;
 
@@ -30,23 +40,10 @@
     };
     swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 
-    networking.networkmanager.enable = false;
+    networking.networkmanager.enable = true;
     networking.hostName = "rpi-nixos";
 
-    services.sshd.enable = true;
-    services.mingetty.autologinUser = "alex";
-    
-    environment.systemPackages = with pkgs; [
-      git
-      emacs
-      (python37.withPackages (p: [ p.discordpy p.gspread p.oauth2client ]))
-    ];
-
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryFlavor = null;
-    };
+    hardware.enableRedistributableFirmware = true;
 
     systemd.user.services.bookbot = {
       enable = true;

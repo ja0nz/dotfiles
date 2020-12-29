@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
 #  cabal-bin = pkgs.callPackage (import ./pkgs/agda-2.6.2.nix) { };
@@ -6,7 +6,7 @@ let
   mymonero = import ./pkgs/mymonero;
 in
 {
-  home.packages = with pkgs; [
+  home.packages = with pkgs; if config.machine != "rpi" then [
 
     wldash
 #    nixmacs
@@ -82,6 +82,7 @@ in
     (mate.caja-with-extensions.override { extensions = [ mate.caja-extensions mate.caja-dropbox ]; })
     mate.eom                  # An image viewing and cataloging program for the MATE desktop
 #    glib                      # C library of programming buildings blocks
+    shared-mime-info          # A database of common MIME types
 
     # LaTeX
 #    texlive.combined.scheme-full
@@ -172,5 +173,13 @@ in
     gnumake                   # A tool to control the generation of non-source files from source
     nixfmt                    # An opinionated formatter for Nix
     elementary-planner        # Task manager with Todoist support designed for GNU/Linux
+  ] else [
+    wldash
+    wl-clipboard
+    git
+    emacs
+    nixmacsrpi
+    pinentry
+    (python37.withPackages (p: [ p.discordpy p.gspread p.oauth2client ]))
   ];
 }
