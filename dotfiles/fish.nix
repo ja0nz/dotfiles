@@ -22,7 +22,7 @@ in
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
     BROWSER = "qutebrower";
-    PATH = "/home/jan/.yarn/bin:$PATH";
+    PATH = "$HOME/.yarn/bin:$HOME/git/git-fuzzy/bin:$PATH"; # Impure but harmless!
   };
 
   xdg.configFile."fish/functions".source = pkgs.callPackage ./fish_prompt.nix { };
@@ -31,6 +31,8 @@ in
     defaultApplications = {
       "application/pdf" = [ "okular.desktop" ];
       "text/html" = [ "qutebrowser.desktop" ];
+      "image/png" = [ "eom.desktop " ];
+      "image/jpeg" = [ "eom.desktop" ];
       "x-scheme-handler/http" = [ "qutebrowser.desktop" ];
       "x-scheme-handler/https" = [ "qutebrowser.desktop" ];
       "x-scheme-handler/ftp" = [ "qutebrowser.desktop" ];

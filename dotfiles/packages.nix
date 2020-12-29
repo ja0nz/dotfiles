@@ -158,7 +158,9 @@ in
     sqlite                    # A self-contained, serverless, zero-configuration SQL db engine
     jq                        # A lightweight and flexible command-line JSON processor
     git-secret                # A bash-tool to store your private data inside a git repository
-    clipman                  # A simple clipboard manager for Wayland
+    clipman                   # A simple clipboard manager for Wayland
+    bc                        # GNU software calculator
+    calibre                   # Comprehensive e-book software
 
     # Dev
     (callPackage sizzy {})    # The browser for Developers & Designers
@@ -169,5 +171,6 @@ in
     racket                    # A programmable programming language
     gnumake                   # A tool to control the generation of non-source files from source
     nixfmt                    # An opinionated formatter for Nix
+    elementary-planner        # Task manager with Todoist support designed for GNU/Linux
   ];
 }

@@ -58,8 +58,8 @@
         org-outline-path-complete-in-steps nil
         org-edit-src-content-indentation 0
         org-capture-templates
-        '(("i" "Daily input, add some tags" entry (file (lambda () (buffer-file-name))) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: in\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
-          ("o" "Daily output, add some tags" entry (file (lambda () (buffer-file-name))) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
+        '(("i" "Daily input, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: in\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
+          ("o" "Daily output, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
           )
         org-refile-targets
         '((nil :maxlevel . 2)
@@ -82,8 +82,8 @@
 (use-package org-roam
   :hook (
          (after-init . org-roam-mode)
-         (org-mode . (lambda () (add-hook 'after-save-hook 'org_roam__bump_revision_date nil t)))
-         )
+         (org-mode . (lambda () (add-hook 'after-save-hook 'org_roam__bump_revision_date nil t))))
+
   :init (require 'org-roam-protocol)
   :custom
   (org-roam-directory "~/Dropbox/org/")
@@ -105,6 +105,7 @@
 
 (use-package org-journal
   :ensure t
+  :defer t
   :config
   (setq org-journal-date-prefix "#+title: "
         org-journal-time-prefix "* "
@@ -119,13 +120,11 @@
                ("M-s-n r" . org-pomodoro) ;; Run
                ("M-s-n t" . org-set-tags-command) ;; Tag
                ("M-s-n d" . org-update-all-dblocks) ;; Dblock
-               ("M-s-n f" . org-clock-csv-to-file)) ;; File
+               ("M-s-n f" . org-clock-csv-to-file) ;; Export Clock to csv
+               ("M-s-n a" . org-agenda-file-to-front)) ;; add current file to agenda files
               :map global-map
-              (("M-s-n a" . org-agenda)
-               ("M-s-n n" . org-journal-new-entry) ;; Entry
+              (("M-s-n n" . org-journal-new-entry) ;; Entry
                ("M-s-n s" . org-journal-new-scheduled-entry)))) ;; Scheduled
-
-
 
 ;; (use-package org-gcal
 ;;   :ensure t

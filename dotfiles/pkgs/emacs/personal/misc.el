@@ -33,7 +33,9 @@
 
 ;; TS
 (use-package typescript-mode
-  :config (setq ts-comint-program-command "~/.yarn/bin/tsun")
+  :config (setq
+           ts-comint-program-command "~/.yarn/bin/tsun"
+           typescript-indent-level 2)
   :bind (:map typescript-mode-map
               (("C-x C-e" . ts-send-last-sexp))))
 
