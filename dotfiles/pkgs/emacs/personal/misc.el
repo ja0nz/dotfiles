@@ -104,6 +104,11 @@
 (add-hook 'emacs-lisp-mode-hook #'elisp-slime-nav-mode)
 (add-hook 'ielm-mode-hook #'elisp-slime-nav-mode)
 
+;; Anki editor
+;; Spaced Repetition for emacs
+(use-package anki-editor
+  :ensure t)
+
 ;; Multi term
 (use-package multi-term
   :ensure t

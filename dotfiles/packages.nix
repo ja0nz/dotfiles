@@ -125,7 +125,6 @@ in
 #    winetricks
 
     ##### Added #####
-    qutebrowser               # Keyboard-focused browser with a minimal GUI
     #mate.caja                 # File manager for the MATE desktop
     okular                    # KDE document viewer
     signal-desktop            # Private, simple, and secure messenger
@@ -162,6 +161,7 @@ in
     clipman                   # A simple clipboard manager for Wayland
     bc                        # GNU software calculator
     calibre                   # Comprehensive e-book software
+    anki                      # Spaced repetition flashcard program
 
     # Dev
     (callPackage sizzy {})    # The browser for Developers & Designers
@@ -172,7 +172,6 @@ in
     racket                    # A programmable programming language
     gnumake                   # A tool to control the generation of non-source files from source
     nixfmt                    # An opinionated formatter for Nix
-    elementary-planner        # Task manager with Todoist support designed for GNU/Linux
   ] else [
     wldash
     wl-clipboard

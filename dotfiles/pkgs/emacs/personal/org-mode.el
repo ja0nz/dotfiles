@@ -46,7 +46,8 @@
         org-agenda-files
         (append
          '("~/Dropbox/org/_tags.org"
-           "~/Dropbox/org/_habits.org")
+           "~/Dropbox/org/_habits.org"
+           "~/Dropbox/org/_kanban.org")
          (directory-files
           org-directory t
           (concat "^W" (format-time-string "%V"))))
@@ -55,6 +56,7 @@
         org-agenda-clockreport-parameter-plist '(:link t :properties ("ALLTAGS" "Effort") :fileskip0 t :compact t)
         org-support-shift-select 'always
         org-goto-interface 'outline-path-completion
+        org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-edit-src-content-indentation 0
         org-capture-templates
@@ -62,9 +64,10 @@
           ("o" "Daily output, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
           )
         org-refile-targets
-        '((nil :maxlevel . 2)
-          ("~/Dropbox/org/_history.org" :maxlevel . 1))))
-
+        '((nil :maxlevel . 1)
+          (org-agenda-files :maxlevel . 1)
+          ("~/Dropbox/org/_archive.org" :maxlevel . 1)
+          ("~/Dropbox/org/_kanban.org" :maxlevel . 1))))
 
 (defun org_roam__bump_revision_date ()
   "Retriving REVISION and replace it naively with current time stamp."
