@@ -56,7 +56,7 @@
         };
       };
       background_opacity = 0.8;
-      mouse.url.launcher = "qutebrowser";
+      mouse.url.launcher = "chromium";
     };
   };
 }

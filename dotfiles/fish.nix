@@ -30,13 +30,9 @@ in
     enable = true;
     defaultApplications = {
       "application/pdf" = [ "okular.desktop" ];
-      "text/html" = [ "qutebrowser.desktop" ];
+      "text/html" = [ "chromium.desktop" ];
       "image/png" = [ "eom.desktop " ];
       "image/jpeg" = [ "eom.desktop" ];
-      "x-scheme-handler/http" = [ "qutebrowser.desktop" ];
-      "x-scheme-handler/https" = [ "qutebrowser.desktop" ];
-      "x-scheme-handler/ftp" = [ "qutebrowser.desktop" ];
-      "x-scheme-handler/chrome" = [ "qutebrower.desktop" ];
       "x-scheme-handler/org-protocol" = [ "org-protocol.desktop" ];
     };
   };

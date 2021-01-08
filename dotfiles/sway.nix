@@ -55,7 +55,7 @@ in
         "${modifier}+Ctrl+t" = "exec caja";
 #        "${modifier}+m" = "exec \"GDK_BACKEND=x11 thunderbird\"";
         "${modifier}+Ctrl+r" = lib.mkForce "exec emacsclient -c";
-        "${modifier}+Ctrl+n" = "exec qutebrowser";
+        "${modifier}+Ctrl+n" = "exec chromium";
         "${modifier}+p" = "exec ${scripts + "/take_screenshot"}";
         "${modifier}+Shift+p" = "exec ${scripts + "/take_screenshot"} full";
         "${modifier}+l" = "exec \"swaylock -f -c 000000\"";
