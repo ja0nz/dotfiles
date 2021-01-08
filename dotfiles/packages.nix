@@ -12,7 +12,6 @@ in
 #    nixmacs
     wl-clipboard             # Command-line copy/paste utilities for Wayland
     cachix                   # Command line client for Nix binary cache hosting https://cachix.org
-#    catt
     pinentry                 # GnuPG’s interface to passphrase input
     binutils                 # Tools for manipulating binaries (linker, assembler, etc.)
     # my-zoom                  # zoom.us video conferencing application
