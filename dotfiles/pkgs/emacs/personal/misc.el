@@ -3,6 +3,9 @@
 ;;(desktop-save-mode 1)
 (scroll-bar-mode -1)
 
+;; Paredit everywhere
+(add-hook 'prog-mode-hook 'paredit-everywhere-mode)
+
 ;; More sane line-number behaviour
 (use-package display-line-numbers
   :hook ((prog-mode . display-line-numbers-mode)
@@ -19,6 +22,9 @@
   (setq calendar-date-style "european"
         calendar-week-start-day 1))
 
+;; Spanish
+(prelude-install-search-engine "SpanishDict" "https://www.spanishdict.com/translate/" "Search SD: ")
+
 ;; Ivy
 (use-package counsel
   :config
@@ -31,7 +37,13 @@
 (use-package org-clock-csv
   :ensure t)
 
+;; Minions (smaller mode line)
+(use-package minions
+  :ensure t
+  :config (minions-mode 1))
+
 ;; TS
+;; Using paredit-everywhere minor mode
 (use-package typescript-mode
   :config (setq
            ts-comint-program-command "~/.yarn/bin/tsun"
@@ -41,7 +53,7 @@
 
 (use-package web-mode
   :hook (web-mode . (lambda ()
-                      (flycheck-add-mode 'typescript-tslint 'web-mode)
+                      (flycheck-add-mode 'typescript-tslint 'javascript-eslint 'web-mode)
                       (when (string-equal "tsx" (file-name-extension buffer-file-name))
                         (prelude-ts-mode-defaults))))
   :init
@@ -57,6 +69,10 @@
   :init (progn
           (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
           (add-to-list 'auto-mode-alist '("pages\\/.*\\.js\\'" . rjsx-mode))))
+
+;;js Prettier
+(use-package prettier-js-mode
+  :hook js2-mode)
 
 ;; (use-package zig-mode
 ;;   :hook (zig-mode . (lambda ()
