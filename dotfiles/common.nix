@@ -124,7 +124,7 @@ in {
     };
 
     services = {
-      mingetty.autologinUser = "jan";
+      getty.autologinUser = "jan";
 
       geoclue2.enable = true;
 
