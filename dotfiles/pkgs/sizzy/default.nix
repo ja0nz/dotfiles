@@ -2,7 +2,7 @@
 
 let
   pname = "sizzy";
-  version = "47.0.0";
+  version = "49.2.0";
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };

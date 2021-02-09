@@ -59,8 +59,8 @@ in
         "${modifier}+p" = "exec ${scripts + "/take_screenshot"}";
         "${modifier}+Shift+p" = "exec ${scripts + "/take_screenshot"} full";
         "${modifier}+l" = "exec \"swaylock -f -c 000000\"";
-        "${modifier}+y" = "exec clipman pick -t dmenu";
-        "${modifier}+Ctrl+y" = "exec clipman clear -t dmenu";
+#        "${modifier}+y" = "exec clipman pick -t dmenu";
+#        "${modifier}+Ctrl+y" = "exec clipman clear -t dmenu";
         "XF86MonBrightnessUp" = "exec \"brillo -A 1\"";
         "XF86MonBrightnessDown" = "exec \"brillo -U 1\"";
         "XF86AudioLowerVolume" = "exec \"pactl set-sink-volume @DEFAULT_SINK@ -5%\"";
@@ -81,7 +81,7 @@ in
 
       startup = [
         { command = "dropbox start"; always = true; }
-        { command = "wl-paste -t text --watch clipman store"; always = false; }
+#        { command = "wl-paste -t text --watch clipman store"; always = false; }
       ];
       input = {
 #        "2:7:SynPS/2_Synaptics_TouchPad" = {

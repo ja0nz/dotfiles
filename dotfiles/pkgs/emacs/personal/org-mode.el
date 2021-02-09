@@ -36,6 +36,7 @@
   (setq yas-snippet-dirs '("~/.emacs.d/snippets")))
 
 (use-package org
+  :ensure org-plus-contrib
   :custom (org-modules (append org-modules '(helm-org org-habit)))
   :hook ((org-mode . (lambda () (org-bullets-mode) (org-indent-mode) (turn-on-visual-line-mode))))
   :bind (:map org-mode-map
@@ -59,6 +60,7 @@
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
         org-edit-src-content-indentation 0
+        org-startup-with-inline-images t
         org-capture-templates
         '(("i" "Daily input, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: in\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
           ("o" "Daily output, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
@@ -120,13 +122,13 @@
   :bind (:map org-mode-map
               (("M-s-n p" . org-set-property) ;; CATEGORY
                ("M-s-n e" . org-set-effort) ;; Effort
-               ("M-s-n r" . org-pomodoro) ;; Run
                ("M-s-n t" . org-set-tags-command) ;; Tag
                ("M-s-n d" . org-update-all-dblocks) ;; Dblock
                ("M-s-n f" . org-clock-csv-to-file) ;; Export Clock to csv
                ("M-s-n a" . org-agenda-file-to-front)) ;; add current file to agenda files
               :map global-map
               (("M-s-n n" . org-journal-new-entry) ;; Entry
+               ("M-s-n r" . org-journal-open-current-journal-file) ;; Current file
                ("M-s-n s" . org-journal-new-scheduled-entry)))) ;; Scheduled
 
 ;; (use-package org-gcal
