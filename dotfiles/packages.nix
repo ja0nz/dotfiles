@@ -3,7 +3,6 @@
 let
 #  cabal-bin = pkgs.callPackage (import ./pkgs/agda-2.6.2.nix) { };
   sizzy = import ./pkgs/sizzy;
-  mymonero = import ./pkgs/mymonero;
 in
 {
   home.packages = with pkgs; if config.machine != "rpi" then [
@@ -130,7 +129,6 @@ in
     virtmanager               # Desktop user interface for managing virtual machines
 
     # Net
-    (callPackage mymonero {}) # MyMonero Desktop Wallet
     mtr                       # A network diagnostics tool
     croc                      # Easily and securely send things from one computer to another
     httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
@@ -157,7 +155,7 @@ in
     sqlite                    # A self-contained, serverless, zero-configuration SQL db engine
     jq                        # A lightweight and flexible command-line JSON processor
     git-secret                # A bash-tool to store your private data inside a git repository
-    clipman                   # A simple clipboard manager for Wayland
+    #clipman                   # A simple clipboard manager for Wayland
     bc                        # GNU software calculator
     calibre                   # Comprehensive e-book software
     anki                      # Spaced repetition flashcard program
@@ -171,6 +169,7 @@ in
     racket                    # A programmable programming language
     gnumake                   # A tool to control the generation of non-source files from source
     nixfmt                    # An opinionated formatter for Nix
+    libavif                   # C implementation of the AV1 Image File Format
   ] else [
     wldash
     wl-clipboard
