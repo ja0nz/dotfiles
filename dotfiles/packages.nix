@@ -164,12 +164,14 @@ in
     (callPackage sizzy {})    # The browser for Developers & Designers
     devd                      # A local webserver for developers
     nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
+    deno                      # A secure runtime for JavaScript and TypeScript
     yarn                      # Fast, reliable, and secure dependency management for javascript
     guile                     # Embedded Scheme implementation
     racket                    # A programmable programming language
     gnumake                   # A tool to control the generation of non-source files from source
     nixfmt                    # An opinionated formatter for Nix
     libavif                   # C implementation of the AV1 Image File Format
+    fasd                      # Quick command-line access to files and directories for POSIX shells
   ] else [
     wldash
     wl-clipboard

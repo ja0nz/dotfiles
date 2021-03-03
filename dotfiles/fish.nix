@@ -11,12 +11,25 @@ in
       node = "env NODE_NO_READLINE=1 rlwrap node";
       bws = "${scripts}/bw-session.fish";
       ls = "exa";
+      rg = "rg --hidden --glob '!.git'";
       cat = "bat";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\w+-system|\{memory)'";
     };
     promptInit = "
     any-nix-shell fish --info-right | source
     ";
+
+    plugins = [
+      {
+        name = "fasd";
+        src = pkgs.fetchFromGitHub {
+        owner = "fishgretel";
+        repo = "fasd";
+        rev = "2c15e162c584312002c375a133fef7773ec33362";
+        sha256 = "1hk10jymdnf2fv1pvql4kbhrxbd6kd5kfsd1dagn3rr55177lqmc";
+        };
+      }
+    ];
   };
 
   home.sessionVariables = {
