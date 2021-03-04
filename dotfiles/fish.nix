@@ -21,12 +21,12 @@ in
 
     plugins = [
       {
-        name = "fasd";
+        name = "z";
         src = pkgs.fetchFromGitHub {
-        owner = "fishgretel";
-        repo = "fasd";
-        rev = "2c15e162c584312002c375a133fef7773ec33362";
-        sha256 = "1hk10jymdnf2fv1pvql4kbhrxbd6kd5kfsd1dagn3rr55177lqmc";
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
+          sha256 =  "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
         };
       }
     ];

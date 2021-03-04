@@ -171,7 +171,6 @@ in
     gnumake                   # A tool to control the generation of non-source files from source
     nixfmt                    # An opinionated formatter for Nix
     libavif                   # C implementation of the AV1 Image File Format
-    fasd                      # Quick command-line access to files and directories for POSIX shells
   ] else [
     wldash
     wl-clipboard
