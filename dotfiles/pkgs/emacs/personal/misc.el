@@ -51,7 +51,18 @@
   :bind (:map typescript-mode-map
               (("C-x C-e" . ts-send-last-sexp))))
 
+
+;; Sane term
+(use-package sane-term
+  :ensure t
+  :bind (
+    ("M-s-d d" . sane-term)
+    ("M-s-d D" . sane-term-create)))
+
 (use-package web-mode
+  :config (setq
+           web-mode-engines-alist
+           '(("django" . "\\.html\\'")))
   :hook (web-mode . (lambda ()
                       (flycheck-add-mode 'typescript-tslint 'javascript-eslint 'web-mode)
                       (when (string-equal "tsx" (file-name-extension buffer-file-name))
