@@ -24,8 +24,8 @@
         org-pomodoro-finished-sound " *org-pomodoro* - 🏃FINISH🏃"
         org-pomodoro-overtime-sound " *org-pomodoro* - ⏰OVERTIME⏰"
         org-pomodoro-killed-sound " *org-pomodoro* - 💀KILLED💀"
-        org-pomodoro-short-break-sound " *org-pomodoro* - 🍰SHORT BREAK🍰"
-        org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK🍖"
+        org-pomodoro-short-break-sound " *org-pomodoro* - 🍰SHORT BREAK FINISHED🍰"
+        org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK FINISHED🍖"
         org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁"))
 
 (use-package yasnippet
@@ -34,6 +34,13 @@
   (yas-global-mode 1)
   :config
   (setq yas-snippet-dirs '("~/.emacs.d/snippets")))
+
+(use-package helm-rg
+  :ensure t
+  :config
+  (setq
+   helm-rg--glob-string "!.git"
+   helm-rg--extra-args "--hidden"))
 
 (use-package org
   :ensure org-plus-contrib
@@ -47,11 +54,10 @@
         org-agenda-files
         (append
          '("~/Dropbox/org/_tags.org"
-           "~/Dropbox/org/_habits.org"
-           "~/Dropbox/org/_kanban.org")
-         (directory-files
-          org-directory t
-          (concat "^W" (format-time-string "%V"))))
+           "~/Dropbox/org/_habits.org")
+          (directory-files
+           org-directory t
+           (concat "^W" (format-time-string "%V"))))
         org-complete-tags-always-offer-all-agenda-tags t
         org-agenda-start-with-clockreport-mode t
         org-agenda-clockreport-parameter-plist '(:link t :properties ("ALLTAGS" "Effort") :fileskip0 t :compact t)
@@ -62,36 +68,40 @@
         org-edit-src-content-indentation 0
         org-startup-with-inline-images t
         org-capture-templates
-        '(("i" "Daily input, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: in\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
-          ("o" "Daily output, add some tags" entry (function org-journal-open-current-journal-file) "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: out\n:Effort:   0:25\n:END:\n" :jump-to-captured t)
-          )
+        (mapcar
+         (lambda (word)
+           (list*
+            (substring word 0 1)
+            (concat "Category: " word)
+            'entry
+            '(function org-journal-open-current-journal-file)
+            (concat "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: " word  "\n:Effort:   0:25\n:END:\n")
+            '(:jump-to-captured t)))
+         '("reading" "writing" "looking" "cooking" "sporting"))
         org-refile-targets
         '((nil :maxlevel . 1)
           (org-agenda-files :maxlevel . 1)
           ("~/Dropbox/org/_archive.org" :maxlevel . 1)
           ("~/Dropbox/org/_kanban.org" :maxlevel . 1))))
 
-(defun org_roam__bump_revision_date ()
-  "Retriving REVISION and replace it naively with current time stamp."
-  (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION")))))))
-    (let ((today (format-time-string (org-time-stamp-format))))
-      (cond ((not lastrev) nil)
-            ((not (string= lastrev today))
-             (progn
-               (push-mark)
-               (re-search-backward "REVISION" nil 1)
-               (while (re-search-forward lastrev nil 1)
-                 (replace-match today))
-               (pop-global-mark)))))))
-
 (use-package org-roam
-  :hook (
-         (after-init . org-roam-mode)
+  :hook ((after-init . org-roam-mode)
          (org-mode . (lambda () (add-hook 'after-save-hook 'org_roam__bump_revision_date nil t))))
-
   :init (require 'org-roam-protocol)
   :custom
   (org-roam-directory "~/Dropbox/org/")
+  :config
+  (defun org_roam__bump_revision_date ()
+    "Retriving REVISION and replace it naively with current time stamp."
+    (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION")))))))
+      (let ((today (format-time-string (org-time-stamp-format))))
+        (cond ((not lastrev) nil)
+              ((not (string= lastrev today))
+               (progn (push-mark)
+                      (re-search-backward "REVISION" nil 1)
+                      (if (re-search-forward lastrev nil 1)
+                          (replace-match today))
+                      (pop-global-mark)))))))
   :config
   (setq org-roam-rename-file-on-title-change nil
         org-roam-capture-templates
@@ -112,19 +122,40 @@
   :ensure t
   :defer t
   :config
-  (setq org-journal-date-prefix "#+title: "
-        org-journal-time-prefix "* "
-        org-journal-date-format "W%V_%Y-%m-%d"
-        org-journal-file-format "W%V_%Y-%m-%d.org"
-        ;;org-journal-file-format (concat org-journal-date-format ".org")
-        ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
-        org-journal-dir "~/Dropbox/org/")
+  (setq
+   org-journal-date-prefix "#+title: "
+   org-journal-date-format "W%V_%Y-%m-%d"
+   org-journal-time-prefix "* "
+   org-journal-file-format "W%V_%Y-%m-%d.org"
+   org-journal-file-header "#+ref: file:_kanban.org\n"
+   ;; But #+title tag back to first line
+   org-journal-after-header-create-hook (lambda () (transpose-lines 1))
+   ;; Automatic org agenda integration
+   org-journal-after-entry-create-hook
+   (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t)))
+   ;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_kanban.org\n"
+   ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+   org-journal-dir "~/Dropbox/org/")
+  :config
+  (defun export-clocktable-csv (&optional week)
+    "Export current week (no prefix argument) or weeks in the "
+    (interactive "P")
+    (let ((week (if week week 0))
+          (time-string (format-time-string "%V")))
+      (when (< 0 week)
+        (let* ((new-time-number (- (string-to-number time-string) week))
+               (new-time-string (number-to-string new-time-number)))
+          (if (< new-time-number 10)
+              (setq time-string (concat "0" new-time-string))
+              (setq time-string new-time-string))))
+      (let ((org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
+        (call-interactively #'org-clock-csv-to-file))))
   :bind (:map org-mode-map
               (("M-s-n p" . org-set-property) ;; CATEGORY
                ("M-s-n e" . org-set-effort) ;; Effort
-               ("M-s-n t" . org-set-tags-command) ;; Tag
+               ("M-s-n t" . counsel-org-tag) ;; Tag
                ("M-s-n d" . org-update-all-dblocks) ;; Dblock
-               ("M-s-n f" . org-clock-csv-to-file) ;; Export Clock to csv
+               ("M-s-n f" . export-clocktable-csv) ;; Export Clock to csv
                ("M-s-n a" . org-agenda-file-to-front)) ;; add current file to agenda files
               :map global-map
               (("M-s-n n" . org-journal-new-entry) ;; Entry

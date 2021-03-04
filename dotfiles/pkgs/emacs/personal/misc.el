@@ -23,7 +23,8 @@
         calendar-week-start-day 1))
 
 ;; Spanish
-(prelude-install-search-engine "SpanishDict" "https://www.spanishdict.com/translate/" "Search SD: ")
+(prelude-install-search-engine "Spanish translate" "https://www.spanishdict.com/translate/" "Translate SD: ")
+(prelude-install-search-engine "Spanish conjugate" "https://www.spanishdict.com/conjugate/" "Conjugate SD: ")
 
 ;; Ivy
 (use-package counsel
@@ -71,8 +72,8 @@
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
 
 ;;JS2
-(use-package js2-mode
-  :config (setq js2-basic-offset 2))
+(use-package js2-mode)
+  :config (setq js2-basic-offset 2)
 
 ;;JSX
 (use-package rjsx-mode
@@ -101,8 +102,8 @@
 ;; Projectile
 (use-package projectile
   :bind (:map projectile-mode-map
-              (("M-s-p r" . helm-projectile-rg)
-               ("M-s-p p" . helm-projectile))))
+              (("M-s-g r" . helm-projectile-rg)
+               ("M-s-g g" . helm-projectile))))
 
 ;; (use-package drag-stuff
 ;;   :enable t
