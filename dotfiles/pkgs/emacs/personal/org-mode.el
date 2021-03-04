@@ -93,15 +93,15 @@
   :config
   (defun org_roam__bump_revision_date ()
     "Retriving REVISION and replace it naively with current time stamp."
-    (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION")))))))
-      (let ((today (format-time-string (org-time-stamp-format))))
-        (cond ((not lastrev) nil)
-              ((not (string= lastrev today))
-               (progn (push-mark)
-                      (re-search-backward "REVISION" nil 1)
-                      (if (re-search-forward lastrev nil 1)
-                          (replace-match today))
-                      (pop-global-mark)))))))
+    (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION"))))))
+          (today (format-time-string (org-time-stamp-format))))
+      (cond ((not lastrev) nil)
+            ((not (string= lastrev today))
+             (progn (push-mark)
+                    (re-search-backward "REVISION" nil 1)
+                    (if (re-search-forward lastrev nil 1)
+                        (replace-match today))
+                    (pop-global-mark))))))
   :config
   (setq org-roam-rename-file-on-title-change nil
         org-roam-capture-templates
@@ -138,18 +138,16 @@
    org-journal-dir "~/Dropbox/org/")
   :config
   (defun export-clocktable-csv (&optional week)
-    "Export current week (no prefix argument) or weeks in the "
-    (interactive "P")
-    (let ((week (if week week 0))
-          (time-string (format-time-string "%V")))
-      (when (< 0 week)
-        (let* ((new-time-number (- (string-to-number time-string) week))
-               (new-time-string (number-to-string new-time-number)))
-          (if (< new-time-number 10)
-              (setq time-string (concat "0" new-time-string))
-              (setq time-string new-time-string))))
-      (let ((org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
-        (call-interactively #'org-clock-csv-to-file))))
+  "Export current week (no prefix argument) or weeks in the "
+  (interactive "P")
+  (let* ((week (if week week 0))
+         (time-string (format-time-string "%V"))
+         (new-time-number (- (string-to-number time-string) week))
+         (new-time-string (number-to-string new-time-number))
+         (time-string (if (< new-time-number 10)
+                          (concat "0" new-time-string) new-time-string))
+         (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
+    (call-interactively #'org-clock-csv-to-file)))
   :bind (:map org-mode-map
               (("M-s-n p" . org-set-property) ;; CATEGORY
                ("M-s-n e" . org-set-effort) ;; Effort
